@@ -43,7 +43,7 @@ cd "$WORKDIR"
 
 # ── Download model ────────────────────────────────────────────────────────────
 MODEL_DIR="/workspace/model"
-if [ ! -d "$MODEL_DIR/config.json" ]; then
+if [ ! -f "$MODEL_DIR/config.json" ]; then
   echo "Downloading model: $MODEL_ID ..."
   huggingface-cli download "$MODEL_ID" \
     --token "$HF_TOKEN" \
