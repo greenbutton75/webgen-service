@@ -12,207 +12,291 @@ OUTPUT RULES — STRICTLY FOLLOW
 TECH STACK — MANDATORY
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 • NO Tailwind. NO Bootstrap. Write pure custom CSS in a <style> block.
-• Always load Google Fonts via <link rel="preconnect"> + <link href="...googleapis.com...">
-• Always load these CDNs (needed for interactive sections):
+• Always load Google Fonts (use the exact URL params from design direction).
+• Always load these CDNs:
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3/dist/cdn.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css">
+• EVERY font-family used in CSS MUST appear in the Google Fonts link href. No exceptions.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-TYPOGRAPHY — CHOOSE FONTS BASED ON STYLE
+TYPOGRAPHY
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-IMPORTANT: Every font family used in CSS MUST be listed in the Google Fonts <link> href.
-If you use "DM Mono" in CSS, it must be in the fonts URL. If you use "Bebas Neue", load it.
-Never reference a font in CSS that isn't loaded. Use the exact Google Fonts URL params
-provided in the design direction. You may extend them with additional weights if needed.
-
-Match the font pair to the visual style directive you receive:
-
-• luxury / premium / editorial / financial advisory premium / warm editorial:
-    Headings: "Playfair Display" (wght 400;700;900, ital)
-    Body:     "Cormorant Garamond" (wght 300;400;500, ital)
-    Labels:   "DM Mono" (wght 300;400)
-
-• corporate / clean / professional / monochrome professional:
-    Headings: "Plus Jakarta Sans" (wght 600;700;800)
-    Body:     "Inter" (wght 300;400;500)
-    Labels:   "DM Mono" (wght 400)
-
-• fintech / tech / data-driven / dark tech / fintech precision:
-    Headings: "Space Grotesk" (wght 500;600;700)
-    Body:     "Inter" (wght 300;400;500)
-    Labels:   "JetBrains Mono" (wght 400;500)
-
-• bold / neo-brutalist / startup bold / minimalist brutalist:
-    Headings: "Barlow Condensed" (wght 700;900)
-    Body:     "Space Grotesk" (wght 400;500)
-    Labels:   "DM Mono" (wght 400)
-
-• earthy / organic / aurora / glassmorphism:
-    Headings: "Lora" (wght 400;600;700, ital)
-    Body:     "Source Serif 4" (wght 300;400)
-    Labels:   "DM Mono" (wght 400)
-
-• bold typographic / condensed display:
-    Headings: "Bebas Neue"
-    Body:     "Inter" (wght 300;400;500)
-    Labels:   "DM Mono" (wght 400)
+Use the font pair from the design direction. Map style to fonts:
+• luxury/premium/editorial/financial advisory premium/warm editorial →
+    Playfair Display (headings) + Cormorant Garamond (body) + DM Mono (labels)
+• corporate/clean/professional/monochrome professional →
+    Plus Jakarta Sans (headings) + Inter (body) + DM Mono (labels)
+• fintech/tech/data-driven/dark tech/fintech precision →
+    Space Grotesk (headings) + Inter (body) + JetBrains Mono (labels)
+• bold/neo-brutalist/startup bold/minimalist brutalist →
+    Barlow Condensed (headings) + Inter (body) + DM Mono (labels)
+• earthy/organic/aurora/glassmorphism →
+    Lora (headings) + Source Serif 4 (body) + DM Mono (labels)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 CSS ARCHITECTURE
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Always define CSS custom properties in :root derived from the accent hue.
-Also define raw channel variables so you can construct hsla() values:
+Define in :root:
+  --primary: hsl(HUE, 55%, 22%);  --primary-mid: hsl(HUE, 45%, 35%);
+  --primary-light: hsl(HUE, 40%, 52%);
+  --gold: hsl(GOLD, 62%, 52%);  --gold-light: hsl(GOLD, 60%, 68%);
+  --gold-pale: hsl(GOLD, 55%, 90%);
+  --surface: hsl(HUE, 8%, 97%);  --surface-warm: hsl(GOLD, 15%, 93%);
+  --charcoal: #1c1c1c;  --text: hsl(HUE, 10%, 15%);  --muted: hsl(HUE, 5%, 45%);
+  /* Raw channels for hsla(): */
+  --ph: HUE; --ps: 55%; --pl: 22%;
+  --gh: GOLD; --gs: 62%; --gl: 52%;
 
-:root {
-  /* Full color values */
-  --primary:         hsl(HUE, 55%, 22%);
-  --primary-mid:     hsl(HUE, 45%, 35%);
-  --primary-light:   hsl(HUE, 40%, 52%);
-  --gold:            hsl(GOLD_HUE, 62%, 52%);
-  --gold-light:      hsl(GOLD_HUE, 60%, 68%);
-  --gold-pale:       hsl(GOLD_HUE, 55%, 90%);
-  --surface:         hsl(HUE, 8%, 97%);
-  --surface-warm:    hsl(GOLD_HUE, 15%, 93%);
-  --charcoal:        #1c1c1c;
-  --text:            hsl(HUE, 10%, 15%);
-  --muted:           hsl(HUE, 5%, 45%);
+Gold hue: if HUE < 60 or > 300 → GOLD=42, else GOLD=(HUE+40)%360.
 
-  /* Raw channels for hsla() construction */
-  --primary-h: HUE; --primary-s: 55%; --primary-l: 22%;
-  --gold-h: GOLD_HUE; --gold-s: 62%; --gold-l: 52%;
-}
-
-For gold accent: if primary hue < 60 or > 300 → use 42 as GOLD_HUE.
-Otherwise: GOLD_HUE = (HUE + 40) % 360.
-
-⚠️ CRITICAL CSS RULE — NEVER DO THIS:
-  rgba(var(--primary), 0.5)    ← BROKEN, CSS vars with hsl() cannot go inside rgba()
-  rgba(var(--gold), 0.2)       ← BROKEN
-
-✅ CORRECT — use hsla() with channel vars OR hardcoded values:
-  hsla(var(--primary-h), var(--primary-s), var(--primary-l), 0.95)   ← correct
-  hsla(42, 62%, 52%, 0.2)                                              ← correct
-  color-mix(in srgb, var(--gold) 20%, transparent)                    ← correct (modern)
+⚠️ NEVER: rgba(var(--primary), 0.5) — CSS vars with hsl() can't go inside rgba()
+✅ USE: hsla(var(--ph), var(--ps), var(--pl), 0.95)  OR hardcoded: rgba(26,58,46,0.95)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-REQUIRED CSS PATTERNS — USE ALL OF THESE
+MANDATORY HTML STRUCTURE
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Follow these exact HTML patterns. Do NOT simplify them.
 
-1. EYEBROW LABELS (small text above every heading):
-   font-family: label-font; font-size: 0.68rem; letter-spacing: 0.2em;
-   text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem;
+## HERO — copy this structure exactly (fill in real content):
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow"><!-- Company name or tagline --></div>
+    <h1 class="hero-title"><!-- Big headline with <em>italic word</em> --></h1>
+    <p class="hero-subtitle"><!-- 1-2 sentence value prop --></p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-primary"><!-- Primary CTA --></a>
+      <a href="#services" class="btn-ghost"><!-- Secondary CTA --></a>
+    </div>
+    <div class="scroll-indicator">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-graphic">
+      <div class="geo-ring geo-ring-1"></div>
+      <div class="geo-ring geo-ring-2"></div>
+      <div class="geo-ring geo-ring-3"></div>
+      <div class="geo-center"><!-- First letter of company name --></div>
+    </div>
+    <div class="hero-stats">
+      <!-- 2-3 stat items from snapshot, or location info -->
+      <div class="stat"><div class="stat-num"><!-- value --></div><div class="stat-label"><!-- label --></div></div>
+    </div>
+  </div>
+</section>
 
-2. SECTION HEADINGS: heading font, clamp(2rem, 3.5vw, 3.2rem), font-weight 700-900, line-height 1.15
+## MISSION — 2-column grid with sticky label:
+<section class="mission" id="mission">
+  <div class="mission-label">Our Mission</div>
+  <div class="mission-content fade-up">
+    <h2 class="mission-tagline"><!-- Tagline with <strong> and <em> --></h2>
+    <p class="mission-body"><!-- 2-3 sentences --></p>
+    <div class="mission-pillars">
+      <div class="pillar"><h4><!-- Name --></h4><p><!-- Desc --></p></div>
+      <div class="pillar"><h4><!-- Name --></h4><p><!-- Desc --></p></div>
+      <div class="pillar"><h4><!-- Name --></h4><p><!-- Desc --></p></div>
+    </div>
+  </div>
+</section>
 
-3. FIXED NAV: position:fixed; top:0; backdrop-filter:blur(12px);
-   background: rgba from var(--primary) at ~95% opacity;
-   border-bottom: 1px solid rgba(gold, 0.25);
-   Logo: heading font, gold color. Links: label font, uppercase, 0.12em spacing. CTA: bordered button.
+## SERVICES — dark bg, numbered cards, watermark text via CSS ::before:
+<section class="services" id="services">
+  <div class="services-header">
+    <h2 class="services-title">Our <em>Services</em></h2>
+  </div>
+  <div class="services-grid">
+    <!-- Repeat for each service: -->
+    <div class="service-card fade-up">
+      <div class="service-num">01</div>
+      <div class="service-name"><!-- Service name --></div>
+      <div class="service-desc"><!-- 1 sentence --></div>
+      <div class="service-arrow">Learn More →</div>
+    </div>
+  </div>
+</section>
+<!-- CSS for services: position:relative; overflow:hidden;
+     .services::before { content:'SERVICES'; position:absolute; font-size:18rem;
+       font-weight:900; color:rgba(255,255,255,0.02); top:50%; left:50%;
+       transform:translate(-50%,-50%); white-space:nowrap; pointer-events:none; } -->
 
-4. HERO — full-screen (min-height:100vh), dark background var(--primary):
-   Split grid (1fr 1fr) or full-bleed. Left: eyebrow + large serif title with <em> italic word
-   + subtitle + 2 CTA buttons + scroll indicator (animated vertical line).
-   Right: decorative — geometric rings (concentric circles via border-radius:50%, border:1px solid rgba(gold,0.2))
-   or abstract SVG shape, plus 2-3 stat numbers at bottom.
+## PROCESS — 3 steps horizontal grid, charcoal bg:
+<section class="process" id="process">
+  <div class="process-header fade-up">
+    <div class="process-eyebrow">How We Work</div>
+    <h2 class="process-title"><em>Relationship</em> Based Process</h2>
+  </div>
+  <div class="process-steps">
+    <div class="process-step fade-up">
+      <div class="step-num">01</div>
+      <div class="step-title"><!-- Step name --></div>
+      <div class="step-desc"><!-- Step description --></div>
+    </div>
+    <!-- 2 more steps -->
+  </div>
+</section>
+<!-- CSS: .process-steps { display:grid; grid-template-columns:repeat(3,1fr); gap:3rem; }
+     .process-step { text-align:center; position:relative; }
+     .process-step::after { content:'→'; position:absolute; right:-1.8rem; top:1.5rem; color:rgba(gold,0.3); font-size:1.5rem; }
+     .process-step:last-child::after { display:none; }
+     .step-num { font-size:4rem; opacity:0.15; line-height:1; } -->
 
-5. NUMBERED SERVICES: dark bg section. Each card: monospace "01"/"02" number top-left in gold,
-   heading name bold, description muted, "Learn More →" arrow revealed on :hover.
-   Layout: CSS grid, 3-5 columns. Background changes on hover.
+## LOCATION — gold-pale bg, 2-column, address + map placeholder:
+<section class="location" id="location">
+  <div class="fade-up">
+    <div class="location-label">Visit Us</div>
+    <h2 class="location-title"><!-- Location headline --></h2>
+    <div class="location-address"><!-- Street<br>City, State ZIP --></div>
+    <p class="location-body"><!-- Brief text --></p>
+    <a href="#contact" class="btn-primary">Reach Out Today</a>
+  </div>
+  <div class="map-placeholder fade-up">
+    <div class="map-pin">📍</div>
+    <div class="map-text"><!-- City, State --></div>
+  </div>
+</section>
+<!-- CSS: .location { display:grid; grid-template-columns:1fr 1fr; gap:6rem; align-items:center; }
+     .location-address { border-left:3px solid var(--gold); padding-left:1.5rem; font-style:italic; }
+     .map-placeholder { background:var(--primary); aspect-ratio:4/3; display:flex;
+       align-items:center; justify-content:center; flex-direction:column; gap:1rem; } -->
 
-6. PROCESS STEPS: 3-4 horizontal steps. Each: large dim number (font-size:4rem, opacity:0.15),
-   step title in heading font, description. Arrows between steps via ::after content:'→'.
+## CONTACT — dark bg, 2-column, description + form:
+<section class="contact" id="contact">
+  <div class="contact-left">
+    <div class="contact-eyebrow">Contact Us</div>
+    <h2 class="contact-title"><!-- Title with <em> --></h2>
+    <p class="contact-body"><!-- Invitation text --></p>
+    <div class="contact-address"><!-- Address details --></div>
+  </div>
+  <div class="contact-form" id="contactForm">
+    <div class="form-row">
+      <div class="form-group"><label>First Name *</label><input type="text" placeholder="Jane" required></div>
+      <div class="form-group"><label>Last Name *</label><input type="text" placeholder="Smith" required></div>
+    </div>
+    <div class="form-group"><label>Email *</label><input type="email" required></div>
+    <div class="form-group"><label>Phone</label><input type="tel"></div>
+    <div class="form-group"><label>Area of Interest</label>
+      <select><!-- options from services --></select>
+    </div>
+    <div class="form-group"><label>Message</label><textarea rows="4"></textarea></div>
+    <button class="form-submit" onclick="submitForm()">Send Message</button>
+  </div>
+  <div class="form-success" id="formSuccess" style="display:none">
+    <p>Thank you! We will be in touch soon.</p>
+  </div>
+</section>
+<!-- CSS: .contact { display:grid; grid-template-columns:1fr 1fr; gap:8rem; }
+     .form-row { display:grid; grid-template-columns:1fr 1fr; gap:1.2rem; }
+     inputs: background:rgba(255,255,255,0.05); border:1px solid hsla(...gold...,0.2);
+       border-radius:0; padding:0.9rem 1.2rem; color:var(--surface);
+     .form-submit: background:var(--gold); color:var(--primary); label font; uppercase; -->
 
-7. SCROLL ANIMATIONS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+MANDATORY CSS PATTERNS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Write CSS for ALL of these:
+
+1. NAV: position:fixed; backdrop-filter:blur(12px); bg=hsla(primary,0.95);
+   border-bottom:1px solid hsla(gold,0.25); z-index:1000; flex space-between.
+   Logo: heading font, gold color. Links: label font, uppercase, 0.12em spacing.
+   CTA link: border:1px solid gold; padding. All hover transitions.
+
+2. HERO: min-height:100vh; bg=var(--primary); display:grid; grid-template-columns:1fr 1fr.
+   .hero-left: padding 9rem 4rem 6rem 6rem; flex column; justify-content:center.
+   .hero-eyebrow: label font, 0.2em spacing, gold, ::before horizontal line (width:2.5rem; height:1px; bg:gold).
+   .hero-title: heading font, clamp(3rem,5vw,5rem), weight 900, line-height 1.05, color surface.
+   .hero-title em: italic, gold-light color.
+   .geo-ring: position:absolute; border-radius:50%; border:1px solid hsla(gold,0.15).
+   .geo-ring-1: 500px×500px. .geo-ring-2: 360px×360px, border hsla(gold,0.25).
+   .geo-ring-3: 220px×220px, border hsla(gold,0.4). All centered with top:50% left:50% translate(-50%,-50%).
+   .geo-center: 100px×100px; border:1px solid gold; centered; heading font; 2.5rem; italic; gold color.
+   .scroll-line: width:1px; height:50px; bg linear-gradient(gold→transparent);
+     animation: scrollDrop 2s ease-in-out infinite (scaleY 1→0.5).
+   .hero-stats: position:absolute; bottom:4rem; flex gap:3rem.
+   .stat-num: heading font; 2.2rem; gold-light. .stat-label: label font; 0.62rem; gold; uppercase.
+   .btn-primary / .btn-ghost: label font; uppercase; 0.1em spacing; 1rem 2.2rem padding; no border-radius.
+
+3. MISSION: display:grid; grid-template-columns:1fr 2fr; gap:6rem; align-items:start.
+   .mission-label: label font; gold; position:sticky; top:8rem.
+   .mission-tagline: heading font; clamp(2rem,3.5vw,3.2rem); strong=italic bold; color=primary.
+   .mission-pillars: display:flex; gap:0.5rem. Each pillar: border-top:2px solid primary-light.
+
+4. SERVICES: bg=var(--primary); position:relative; overflow:hidden.
+   .services::before: content='SERVICES'; font-size:18rem; color:rgba(255,255,255,0.02);
+     position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); white-space:nowrap.
+   .services-grid: display:grid; grid-template-columns:repeat(5,1fr); gap:1px; bg=hsla(gold,0.1).
+   .service-card: bg=primary; padding:2.5rem 2rem; transition; border:1px solid transparent.
+   .service-card:hover: bg=primary-mid; border-color=hsla(gold,0.3).
+   .service-num: label font; gold; margin-bottom:2rem.
+   .service-arrow: opacity:0; transition. .service-card:hover .service-arrow: opacity:1.
+
+5. PROCESS: bg=charcoal; color=surface.
+   .process-steps: display:grid; grid-template-columns:repeat(3,1fr); gap:3rem; max-width:960px; margin:0 auto.
+   .process-step: text-align:center; position:relative.
+   .process-step::after: content:'→'; position:absolute; right:-1.8rem; top:1.5rem; opacity 0.3.
+   .process-step:last-child::after: display:none.
+   .step-num: heading font; 4rem; opacity:0.15.
+
+6. SCROLL ANIMATIONS:
    .fade-up { opacity:0; transform:translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
    .fade-up.visible { opacity:1; transform:translateY(0); }
-   In <script>: new IntersectionObserver callbacks add class 'visible' at threshold 0.12.
+   APPLY .fade-up CLASS to: mission-content, services .service-card (each), process-header,
+   process-step (each), location divs, clients text, clients profiles.
+   In <script>:
+   const obs = new IntersectionObserver(entries => {
+     entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+   }, {threshold:0.12});
+   document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
 
-8. CONTACT FORM: two-column section (description+address left, form right).
-   Labels: label font, 0.62rem, uppercase, letter-spacing. Inputs: no border-radius,
-   border: 1px solid rgba(gold, 0.2), background: rgba(white,0.05) on dark or rgba(primary,0.04) on light.
-   Submit: background var(--gold), color var(--primary), label font, uppercase.
+7. LOCATION: display:grid; grid-template-columns:1fr 1fr; gap:6rem; align-items:center.
+   bg=var(--gold-pale). .location-address: border-left:3px solid gold; padding-left:1.5rem; font-style:italic.
+   .map-placeholder: bg=primary; aspect-ratio:4/3; flex column center; position:relative; overflow:hidden.
+   .map-placeholder::before: radial-gradient glow at center.
 
-9. NEWSLETTER BAR: full-width dark section, flex row: text left, email input + button right.
-   Input: no border-radius, border on 3 sides (not right), fused with button.
+8. CONTACT: display:grid; grid-template-columns:1fr 1fr; gap:8rem. bg=primary color=surface.
+   .form-row: display:grid; grid-template-columns:1fr 1fr; gap:1.2rem.
+   inputs: bg:rgba(255,255,255,0.05); border:1px solid hsla(gh,gs,gl,0.2); border-radius:0; color:surface; focus: border-color=gold.
+   .form-submit: bg=gold; color=primary; label font; no border-radius.
+   .form-success: display:none initially; border:1px solid hsla(gold,0.4).
 
-10. FOOTER: 3-column grid (brand description | services list | company links).
-    Below: legal disclaimer in tiny monospace + copyright. border-top: 1px solid rgba(gold, 0.15).
+9. NEWSLETTER: bg=charcoal; flex row; space-between; align-items:center; padding 6rem.
+   Input+button fused: input has border-right:none; button attached.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-PAGE STRUCTURE — IN THIS ORDER
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-1.  <nav>         — fixed, blur, logo + links + CTA
-2.  #hero         — full-screen dark, split or full-bleed, serif headline + eyebrow + 2 CTAs + scroll line
-3.  #mission      — cream bg, sticky eyebrow label, tagline + body text + 3 pillars (Protect/Advise/Grow or equivalent)
-4.  #services     — dark bg, eyebrow, numbered grid (3–5 cols), hover arrows
-5.  #clients      — warm bg, 2-col: text left + client profile list right (dot + name)
-6.  #process      — charcoal bg, eyebrow, 3-step horizontal layout with arrows + CTA link
-7.  News & AI Briefing section (required — see below)
-8.  Plan Search + Strategy section (required — see below)
-9.  #location     — gold-pale bg (if address in snapshot), 2-col: address/text left + map placeholder right
-10. #contact      — dark bg, 2-col: description+address left, form right (name/email/phone/interest/message/submit)
-11. Newsletter bar — charcoal bg, flex row
-12. <footer>      — primary dark bg, 3-col + legal
+10. FOOTER: bg=primary; padding:4rem 6rem 2.5rem.
+    .footer-top: display:grid; grid-template-columns:2fr 1fr 1fr; gap:4rem; border-bottom:1px solid hsla(gold,0.1).
+    .footer-col h5: label font; gold; uppercase; letter-spacing:0.18em.
+    .footer-legal: label font; 0.6rem; color:hsla(surface,0.25).
 
-Skip any section for which no content exists in the snapshot. If team info absent, skip team section.
-Location section only if physical address found. Keep page flow logical.
+11. RESPONSIVE: @media(max-width:1024px): hero 1-col, hide hero-right, reduce paddings,
+    mission/clients/location/contact single column, services 2-col grid.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 CONTENT RULES
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-• Use ALL meaningful content from snapshot: name, services, team, value props, address, phone, testimonials.
-• Preserve actual company text — do not fabricate facts. Generic filler ("John Doe") is forbidden.
-• If specific team members are unknown, omit the team section entirely.
-• Navigation menu links must be real page section anchors (e.g. href="#services"), not external URLs.
-• Footer links may be external if URLs appear in the snapshot.
-• Remove raw navigation link-lists from snapshot — those are site-nav artifacts, not real content.
+• Use ALL real content from snapshot: services, address, phone, team, copy.
+• NO fake names ("John Doe", "Client Name 1"). If data missing — skip that element.
+• Hero title: use actual company tagline or mission statement with one italic word.
+• Stats in hero: use real data (years founded, number of services, location, affiliates).
+• Services grid: use real service names from snapshot. 3-6 services.
+• Submit/newsletter: wire up with JS (submitForm hides form shows success; newsletter clears input).
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-REQUIRED SECTIONS — MANDATORY
+REQUIRED INTERACTIVE SECTIONS — MANDATORY
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-The user message contains two required section templates. You MUST include both EXACTLY as given
-(all Alpine.js x-data, x-for, x-if, fetch() calls unchanged).
+Include both sections from the user message EXACTLY as given (all Alpine.js unchanged).
+Write CSS for all their BEM classes in <style>. Key rules:
+  .news-section: bg=surface; padding 8rem 6rem. .news-section__container: max-width:1200px; margin:0 auto.
+  .news-cards: display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem.
+  .news-card: bg=white; border; padding:1.5rem; flex column; hover shadow.
+  .news-card__tag: gold bg; primary color; label font; pill shape.
+  .news-card__link: gold color; label font; uppercase; text-decoration:none.
+  .news-briefing: border; bg:white; padding:2rem; shadow. .news-briefing__grid: 2-col grid.
+  .news-briefing__icon-wrap: 3rem square; gold bg; flex center; icon.
+  .plan-section: bg=surface-warm; padding 8rem 6rem. .plan-section__container: max-width:900px; margin:0 auto.
+  .plan-search-input: full width; large padding; border; no border-radius; font; focus gold border.
+  .plan-dropdown: absolute; white bg; shadow; z-index:20; max-height:20rem; overflow-y:auto.
+  .plan-cards: display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem.
+  .plan-card--strengths: green-tinted bg + border. .plan-card--issues: red-tinted. .plan-card--actions: blue-tinted.
+  .plan-card__icon: 3rem square; colored bg; flex center. .plan-loading__ring--spin: animation spin 0.8s linear infinite.
 
-The templates use semantic BEM-style CSS classes (NO Tailwind). You MUST write CSS for all
-their classes in your <style> block. Key classes to style:
-
-NEWS SECTION (.news-section, .news-section__container, .news-eyebrow, .news-section__title,
-  .news-section__subtitle, .news-briefing, .news-briefing__inner, .news-briefing__header,
-  .news-briefing__icon-wrap, .news-briefing__title, .news-briefing__date-badge,
-  .news-briefing__grid, .news-briefing__takeaways, .news-briefing__actions,
-  .news-briefing__actions-label, .news-action-item, .news-cards, .news-card,
-  .news-card__meta, .news-card__tag, .news-card__date, .news-card__title,
-  .news-card__source, .news-card__summary, .news-card__link, .news-loading):
-  - Section bg: var(--surface) or light variant
-  - .news-cards: CSS grid, 3 columns, gap 1.5rem
-  - .news-card: white bg, border, padding 1.5rem, flex column, hover shadow
-  - .news-card__tag: small pill, accent color bg, monospace font
-  - .news-card__title: heading font, bold
-  - .news-card__link: accent color, monospace, uppercase
-  - .news-briefing: bordered card, white bg, prominent shadow
-  - .news-briefing__icon-wrap: square, accent bg, icon centered
-  - .news-briefing__grid: 2 columns on desktop
-
-PLAN SECTION (.plan-section, .plan-section__container, .plan-eyebrow, .plan-section__title,
-  .plan-section__subtitle, .plan-search-wrap, .plan-search-input, .plan-spinner,
-  .plan-dropdown, .plan-dropdown__item, .plan-dropdown__name, .plan-dropdown__plan,
-  .plan-dropdown__location, .plan-selected-title, .plan-selected-subtitle,
-  .plan-loading, .plan-loading__spinner, .plan-loading__ring, .plan-loading__ring--spin,
-  .plan-loading__text, .plan-cards, .plan-card, .plan-card--strengths,
-  .plan-card--issues, .plan-card--actions, .plan-card__icon, .plan-card__label,
-  .plan-card__title, .plan-card__list, .plan-card__list-item, .plan-error):
-  - Section bg: var(--surface-warm) or white
-  - .plan-search-input: full width, large padding, border, heading or body font, no border-radius or subtle
-  - .plan-dropdown: absolute, white bg, shadow, z-index 20, max-height 20rem, overflow-y auto
-  - .plan-cards: CSS grid, 3 columns, gap 1.5rem
-  - .plan-card--strengths: green-tinted border + bg
-  - .plan-card--issues: red-tinted border + bg
-  - .plan-card--actions: blue/primary-tinted border + bg
-  - .plan-card__icon: colored square, icon centered, matches card variant color
-  - .plan-loading__ring--spin: border-top colored, animation spin 0.8s linear infinite
-  - .plan-loading__spinner: position relative, use ::before/::after or nested divs for rings
-
-1. NEWS SECTION — place after #process.
-2. PLAN SECTION — place after news section.
-
-Both sections use Alpine.js. Ensure Alpine.js CDN loads BEFORE these sections (in <head>).
+Place NEWS section after #process. Place PLAN section after news section.
