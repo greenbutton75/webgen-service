@@ -105,6 +105,23 @@ open http://<vast_ip>:<mapped_port>/admin
 BASE_URL = "http://<vast_ip>:<mapped_port>"
 ```
 
+
+## Generation Speed (solved)
+- **Before fix**: 4.3 t/s (awq kernel, slow) → 20+ min per site
+- **After fix**: 60 t/s (awq_marlin kernel) → **~3 min per site** (hot start)
+- Root cause: model was started with `--quantization awq` despite supporting `awq_marlin`
+  The log warned: "you specified quantization=awq explicitly, so forcing awq"
+- Fix: use `--quantization awq_marlin --dtype bfloat16`
+
+## startup.sh — Clean Instance Will Work Correctly
+- ✅ `--quantization awq_marlin` — fast kernel
+- ✅ `--dtype bfloat16` — optimal for A100
+- ✅ `GPU_COUNT` defaults to 1 (was 2, now fixed)
+- ✅ `vllm==0.15.1` pinned (was unversioned)
+- ✅ `max-model-len 32768` (was 65536, fixed earlier)
+- ⚠️ On first clean start: model download (~18 GB) + CUDA graph compile (~2 min) = cold start ~10-15 min total
+
+
 ---
 
 ## Важно про данные

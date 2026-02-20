@@ -322,20 +322,22 @@ Write CSS for all their BEM classes in <style>. Key rules:
     z-index:20; max-height:20rem; overflow-y:auto; rounded corners and soft border.
   .plan-dropdown__item: must look like the reference cards (clean, aligned, not cramped).
     Use display:grid; grid-template-columns: 1fr auto; align-items:center; gap:1rem;
-    background:white; border:1px solid hsla(var(--ph),var(--ps),var(--pl),0.12);
+    width:100%; box-sizing:border-box; background:white;
+    border:1px solid hsla(var(--ph),var(--ps),var(--pl),0.12);
     padding:1rem 1.25rem; margin:0.4rem 0; border-radius:0.6rem;
     hover: subtle shadow + slightly darker border.
     Left block (name/plan/location) should be left-aligned; arrow aligned right.
     .plan-dropdown__name: label font but NOT overly spaced; uppercase ok; color=var(--primary).
     .plan-dropdown__plan: body font; muted; no heavy letter-spacing.
     .plan-dropdown__location: muted, small, with location icon and slight spacing.
-  .plan-cards: THIS MUST BE A HORIZONTAL CAROUSEL (no JS) even on desktop:
+  .plan-cards: THIS MUST BE A HORIZONTAL CAROUSEL (no JS) and must NOT overflow
+    beyond the section width. Use:
     display:flex; gap:1.5rem; overflow-x:auto; scroll-snap-type:x mandatory;
-    padding:0.5rem 0 1rem; -webkit-overflow-scrolling:touch;
-    scroll-padding-left:1rem; scrollbar styles subtle or hidden.
-    .plan-card { flex:0 0 82%; max-width:560px; min-width:320px;
+    max-width:100%; box-sizing:border-box; padding:0.5rem 0 1rem;
+    -webkit-overflow-scrolling:touch; scroll-padding:1rem; scrollbar hidden/subtle.
+    .plan-card { flex:0 0 100%; max-width:100%; min-width:320px;
       scroll-snap-align:start; border-radius:1rem; box-shadow; }
-    Aim to show 1 full card + a peek of the next card (carousel feel).
+    This shows one full card per view with swipe/scroll for more.
   .plan-card--strengths: green-tinted bg + border. .plan-card--issues: red-tinted. .plan-card--actions: blue-tinted.
   .plan-card__icon: 3rem square; colored bg; flex center. .plan-loading__ring--spin: animation spin 0.8s linear infinite.
 

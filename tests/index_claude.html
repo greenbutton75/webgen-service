@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Appleseed Wealth Management</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --emerald: #1a3a2e;
+    --emerald-mid: #2d5c47;
+    --emerald-light: #4a8c6e;
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --gold-pale: #f5e9c8;
+    --cream: #faf7f2;
+    --warm-white: #f0ebe0;
+    --charcoal: #1c1c1c;
+    --mid-gray: #6b6b6b;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    background: var(--cream);
+    color: var(--charcoal);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.4rem 4rem;
+    background: rgba(26,58,46,0.96);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201,168,76,0.25);
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--gold-light);
+    letter-spacing: 0.05em;
+    text-decoration: none;
+  }
+  .nav-logo span { font-weight: 400; font-style: italic; color: var(--gold-pale); }
+
+  .nav-links {
+    display: flex; gap: 2.5rem; list-style: none; align-items: center;
+  }
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(240,235,224,0.8);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold-light); }
+  .nav-links .nav-cta {
+    border: 1px solid var(--gold);
+    padding: 0.5rem 1.4rem;
+    color: var(--gold-light);
+    border-radius: 1px;
+    transition: all 0.25s;
+  }
+  .nav-links .nav-cta:hover { background: var(--gold); color: var(--emerald); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    background: var(--emerald);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 50%, rgba(201,168,76,0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 10% 80%, rgba(74,140,110,0.15) 0%, transparent 50%);
+  }
+
+  .hero-left {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 9rem 4rem 6rem 6rem;
+    position: relative; z-index: 1;
+  }
+
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 2rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: block; width: 2.5rem; height: 1px; background: var(--gold);
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 5vw, 5rem);
+    font-weight: 900;
+    line-height: 1.05;
+    color: var(--cream);
+    margin-bottom: 1.5rem;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  .hero-subtitle {
+    font-size: 1.2rem;
+    font-weight: 300;
+    line-height: 1.7;
+    color: rgba(240,235,224,0.75);
+    max-width: 440px;
+    margin-bottom: 3rem;
+  }
+
+  .hero-btns { display: flex; gap: 1.2rem; flex-wrap: wrap; }
+
+  .btn-primary {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: var(--gold);
+    color: var(--emerald);
+    padding: 1rem 2.2rem;
+    text-decoration: none;
+    font-weight: 400;
+    transition: all 0.25s;
+    border: 1px solid var(--gold);
+  }
+  .btn-primary:hover { background: var(--gold-light); }
+
+  .btn-ghost {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: 1px solid rgba(201,168,76,0.4);
+    color: var(--gold-pale);
+    padding: 1rem 2.2rem;
+    text-decoration: none;
+    transition: all 0.25s;
+  }
+  .btn-ghost:hover { border-color: var(--gold); color: var(--gold-light); }
+
+  .hero-right {
+    display: flex; align-items: flex-end;
+    position: relative; overflow: hidden;
+  }
+
+  .hero-graphic {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* Decorative geometric */
+  .geo-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.15);
+  }
+  .geo-ring-1 { width: 500px; height: 500px; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+  .geo-ring-2 { width: 360px; height: 360px; top: 50%; left: 50%; transform: translate(-50%,-50%); border-color: rgba(201,168,76,0.25); }
+  .geo-ring-3 { width: 220px; height: 220px; top: 50%; left: 50%; transform: translate(-50%,-50%); border-color: rgba(201,168,76,0.4); }
+
+  .geo-center {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+    width: 100px; height: 100px;
+    border: 1px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    color: var(--gold);
+    font-style: italic;
+  }
+
+  .hero-stats {
+    position: absolute; bottom: 4rem; left: 4rem; right: 2rem;
+    display: flex; gap: 3rem;
+  }
+  .stat { }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--gold-light);
+    line-height: 1;
+  }
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(240,235,224,0.5);
+    margin-top: 0.3rem;
+  }
+
+  /* scroll indicator */
+  .scroll-indicator {
+    position: absolute; bottom: 2.5rem; left: 6rem;
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(201,168,76,0.5);
+    z-index: 1;
+  }
+  .scroll-line {
+    width: 1px; height: 50px;
+    background: linear-gradient(to bottom, rgba(201,168,76,0.5), transparent);
+    animation: scrollDrop 2s ease-in-out infinite;
+  }
+  @keyframes scrollDrop {
+    0%,100% { transform: scaleY(1); opacity: 1; }
+    50% { transform: scaleY(0.5); opacity: 0.4; }
+  }
+
+  /* ── MISSION ── */
+  .mission {
+    padding: 8rem 6rem;
+    background: var(--cream);
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 6rem;
+    align-items: start;
+  }
+
+  .mission-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    position: sticky; top: 8rem;
+  }
+
+  .mission-content {}
+  .mission-tagline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 3.5vw, 3.2rem);
+    font-weight: 400;
+    line-height: 1.25;
+    color: var(--emerald);
+    margin-bottom: 2rem;
+  }
+  .mission-tagline strong {
+    font-weight: 700;
+    font-style: italic;
+  }
+  .mission-body {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: var(--mid-gray);
+    max-width: 580px;
+    font-weight: 300;
+  }
+
+  .mission-pillars {
+    display: flex; gap: 0.5rem; margin-top: 3rem;
+  }
+  .pillar {
+    flex: 1;
+    border-top: 2px solid var(--emerald-light);
+    padding-top: 1.2rem;
+  }
+  .pillar h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    font-style: italic;
+    color: var(--emerald);
+    margin-bottom: 0.4rem;
+  }
+  .pillar p {
+    font-size: 0.9rem;
+    color: var(--mid-gray);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  /* ── SERVICES ── */
+  .services {
+    padding: 6rem;
+    background: var(--emerald);
+    position: relative;
+    overflow: hidden;
+  }
+  .services::before {
+    content: 'SERVICES';
+    position: absolute;
+    font-family: 'Playfair Display', serif;
+    font-size: 18rem;
+    font-weight: 900;
+    color: rgba(255,255,255,0.02);
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  .services-header {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-bottom: 4rem;
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    padding-bottom: 2rem;
+  }
+  .services-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 3vw, 2.8rem);
+    color: var(--cream);
+    font-weight: 400;
+  }
+  .services-title em { color: var(--gold-light); font-style: italic; }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1px;
+    background: rgba(201,168,76,0.1);
+    position: relative; z-index: 1;
+  }
+
+  .service-card {
+    background: var(--emerald);
+    padding: 2.5rem 2rem;
+    transition: background 0.3s;
+    text-decoration: none;
+    display: block;
+    border: 1px solid transparent;
+  }
+  .service-card:hover {
+    background: var(--emerald-mid);
+    border-color: rgba(201,168,76,0.3);
+  }
+
+  .service-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    margin-bottom: 2rem;
+  }
+  .service-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 0.8rem;
+    line-height: 1.3;
+  }
+  .service-desc {
+    font-size: 0.88rem;
+    color: rgba(240,235,224,0.55);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+  .service-arrow {
+    margin-top: 2rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .service-card:hover .service-arrow { opacity: 1; }
+
+  /* ── CLIENTS ── */
+  .clients {
+    padding: 8rem 6rem;
+    background: var(--warm-white);
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 8rem;
+    align-items: center;
+  }
+
+  .clients-text {}
+  .section-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    color: var(--emerald);
+    line-height: 1.2;
+    margin-bottom: 2rem;
+    font-weight: 700;
+  }
+  .section-body {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--mid-gray);
+    font-weight: 300;
+    margin-bottom: 2.5rem;
+  }
+
+  .client-profiles {
+    display: flex; flex-direction: column; gap: 0;
+  }
+  .client-profile {
+    padding: 1.5rem 0;
+    border-bottom: 1px solid rgba(26,58,46,0.12);
+    display: flex; align-items: center; gap: 1.2rem;
+  }
+  .client-profile:first-child { border-top: 1px solid rgba(26,58,46,0.12); }
+  .profile-dot {
+    width: 8px; height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .profile-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    color: var(--emerald);
+    font-style: italic;
+  }
+
+  /* ── PROCESS ── */
+  .process {
+    padding: 8rem 6rem;
+    background: var(--charcoal);
+    position: relative;
+  }
+
+  .process-header {
+    text-align: center;
+    margin-bottom: 5rem;
+  }
+  .process-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 3.5vw, 3.5rem);
+    color: var(--cream);
+    font-weight: 400;
+  }
+  .process-title em { color: var(--gold-light); font-style: italic; }
+
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  .process-step {
+    text-align: center;
+    position: relative;
+  }
+  .process-step::after {
+    content: '→';
+    position: absolute;
+    right: -1.8rem; top: 1.5rem;
+    color: rgba(201,168,76,0.3);
+    font-size: 1.5rem;
+  }
+  .process-step:last-child::after { display: none; }
+
+  .step-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 4rem;
+    font-weight: 900;
+    color: rgba(201,168,76,0.15);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .step-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--gold-light);
+    margin-bottom: 0.8rem;
+  }
+  .step-desc {
+    font-size: 0.9rem;
+    color: rgba(240,235,224,0.5);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  /* ── LOCATION ── */
+  .location {
+    padding: 8rem 6rem;
+    background: var(--gold-pale);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+  }
+
+  .location-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--emerald-light);
+    margin-bottom: 1.5rem;
+  }
+  .location-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 3vw, 2.8rem);
+    color: var(--emerald);
+    line-height: 1.2;
+    margin-bottom: 2rem;
+    font-weight: 700;
+  }
+  .location-address {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    line-height: 1.7;
+    color: var(--emerald);
+    font-style: italic;
+    border-left: 3px solid var(--gold);
+    padding-left: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .map-placeholder {
+    background: var(--emerald);
+    aspect-ratio: 4/3;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column;
+    gap: 1rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .map-placeholder::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at center, rgba(201,168,76,0.1) 0%, transparent 60%);
+  }
+  .map-pin {
+    font-size: 3rem;
+    position: relative; z-index: 1;
+  }
+  .map-text {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(201,168,76,0.6);
+    position: relative; z-index: 1;
+  }
+
+  /* ── CONTACT ── */
+  .contact {
+    padding: 8rem 6rem;
+    background: var(--emerald);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8rem;
+  }
+
+  .contact-left {}
+  .contact-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 3.5vw, 3.2rem);
+    color: var(--cream);
+    line-height: 1.2;
+    font-weight: 400;
+    margin-bottom: 1.5rem;
+  }
+  .contact-title em { color: var(--gold-light); font-style: italic; }
+  .contact-body {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: rgba(240,235,224,0.65);
+    font-weight: 300;
+    margin-bottom: 3rem;
+  }
+
+  .contact-form {
+    display: flex; flex-direction: column; gap: 1.2rem;
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+  .form-group label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(201,168,76,0.7);
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(201,168,76,0.2);
+    padding: 0.9rem 1.2rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: var(--cream);
+    outline: none;
+    transition: border-color 0.2s;
+    -webkit-appearance: none;
+    border-radius: 0;
+  }
+  .form-group input::placeholder,
+  .form-group textarea::placeholder { color: rgba(240,235,224,0.25); }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus { border-color: var(--gold); }
+  .form-group select option { background: var(--emerald); }
+  .form-group textarea { resize: vertical; min-height: 120px; }
+
+  .form-submit {
+    background: var(--gold);
+    color: var(--emerald);
+    border: none;
+    padding: 1.1rem 2.5rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.25s;
+    align-self: flex-start;
+  }
+  .form-submit:hover { background: var(--gold-light); }
+
+  .form-success {
+    display: none;
+    padding: 1.5rem;
+    border: 1px solid rgba(201,168,76,0.4);
+    background: rgba(201,168,76,0.08);
+  }
+  .form-success p {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    color: var(--gold-light);
+    font-size: 1.1rem;
+  }
+
+  /* ── NEWSLETTER ── */
+  .newsletter {
+    padding: 6rem;
+    background: var(--charcoal);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4rem;
+    flex-wrap: wrap;
+  }
+  .newsletter-text {}
+  .newsletter-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--cream);
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+  }
+  .newsletter-title em { color: var(--gold-light); font-style: italic; }
+  .newsletter-sub {
+    font-size: 1rem;
+    color: rgba(240,235,224,0.5);
+    font-weight: 300;
+  }
+  .newsletter-form {
+    display: flex; gap: 0;
+    flex: 1; max-width: 500px;
+  }
+  .newsletter-input {
+    flex: 1;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-right: none;
+    padding: 1rem 1.5rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: var(--cream);
+    outline: none;
+  }
+  .newsletter-input::placeholder { color: rgba(240,235,224,0.3); }
+  .newsletter-input:focus { border-color: var(--gold); }
+  .newsletter-btn {
+    background: var(--gold);
+    border: none;
+    padding: 1rem 2rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--emerald);
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+  .newsletter-btn:hover { background: var(--gold-light); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--emerald);
+    border-top: 1px solid rgba(201,168,76,0.15);
+    padding: 4rem 6rem 2.5rem;
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 4rem;
+    margin-bottom: 4rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+  }
+
+  .footer-brand {}
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--gold-light);
+    margin-bottom: 1rem;
+  }
+  .footer-logo span { font-weight: 400; font-style: italic; }
+  .footer-tagline {
+    font-size: 0.95rem;
+    color: rgba(240,235,224,0.5);
+    line-height: 1.7;
+    font-weight: 300;
+    max-width: 300px;
+  }
+
+  .footer-col h5 {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+  .footer-col a {
+    font-size: 0.9rem;
+    color: rgba(240,235,224,0.55);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-col a:hover { color: var(--gold-light); }
+
+  .footer-bottom {
+    display: flex; align-items: flex-start; justify-content: space-between; gap: 2rem;
+    flex-wrap: wrap;
+  }
+  .footer-legal {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.05em;
+    color: rgba(240,235,224,0.25);
+    max-width: 680px;
+    line-height: 1.7;
+  }
+  .footer-copy {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    color: rgba(240,235,224,0.3);
+    white-space: nowrap;
+  }
+
+  /* ── ANIMATIONS ── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1024px) {
+    nav { padding: 1.2rem 2rem; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .hero-left { padding: 8rem 3rem 5rem; }
+    .mission, .clients, .location, .contact { grid-template-columns: 1fr; gap: 3rem; padding: 5rem 3rem; }
+    .services { padding: 5rem 3rem; }
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+    .process-steps { grid-template-columns: 1fr; }
+    .process-step::after { display: none; }
+    .newsletter { padding: 4rem 3rem; flex-direction: column; }
+    .newsletter-form { max-width: 100%; width: 100%; }
+    footer { padding: 3rem 2rem 2rem; }
+    .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+    .nav-links { gap: 1.2rem; }
+  }
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+    .services-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .hero-left { padding: 7rem 1.5rem 4rem; }
+    .mission, .clients, .location, .contact, .services, .process { padding: 4rem 1.5rem; }
+    .newsletter { padding: 3rem 1.5rem; }
+    footer { padding: 3rem 1.5rem 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Appleseed <span>Wealth</span></a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#clients">Who We Serve</a></li>
+    <li><a href="#process">Our Process</a></li>
+    <li><a href="#location">Visit Us</a></li>
+    <li><a href="#contact" class="nav-cta">Contact Us</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Appleseed Wealth Management</div>
+    <h1 class="hero-title">
+      Wealth<br>Management<br>you can <em>trust.</em>
+    </h1>
+    <p class="hero-subtitle">
+      Our team is here to help you protect your future. Let's build your financial legacy together.
+    </p>
+    <div class="hero-btns">
+      <a href="https://www.csbbankonline.bank/wealth-management/appleseed-team" target="_blank" class="btn-primary">Meet Our Team</a>
+      <a href="#contact" class="btn-ghost">Start a Conversation</a>
+    </div>
+    <div class="scroll-indicator">
+      <div class="scroll-line"></div>
+      Scroll
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-graphic">
+      <div class="geo-ring geo-ring-1"></div>
+      <div class="geo-ring geo-ring-2"></div>
+      <div class="geo-ring geo-ring-3"></div>
+      <div class="geo-center">A</div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">Fort<br>Wayne</div>
+        <div class="stat-label">Indiana</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">5</div>
+        <div class="stat-label">Core Services</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">CSB</div>
+        <div class="stat-label">Affiliate</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MISSION -->
+<section class="mission" id="mission">
+  <div class="mission-label">Our Mission</div>
+  <div class="mission-content fade-up">
+    <h2 class="mission-tagline">
+      <strong>Protect.</strong> Advise. <strong>Grow.</strong><br>
+      Your financial future,<br>your way.
+    </h2>
+    <p class="mission-body">
+      We are dedicated to becoming a trusted partner that helps you achieve financial security at every stage of life — through personalized investment solutions and strategic, human-centered advice.
+    </p>
+    <div class="mission-pillars">
+      <div class="pillar">
+        <h4>Protect</h4>
+        <p>Safeguard your assets and financial future against uncertainty.</p>
+      </div>
+      <div class="pillar">
+        <h4>Advise</h4>
+        <p>Strategic insights tailored to your unique situation.</p>
+      </div>
+      <div class="pillar">
+        <h4>Grow</h4>
+        <p>Personalized investment solutions built for the long term.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="services-header">
+    <h2 class="services-title">Our <em>Services</em></h2>
+  </div>
+  <div class="services-grid">
+    <a href="https://www.csbbankonline.bank/wealth-management/investment-management" target="_blank" class="service-card">
+      <div class="service-num">01</div>
+      <div class="service-name">Investment Management</div>
+      <div class="service-desc">Build and protect your wealth with the help of our experienced team.</div>
+      <div class="service-arrow">Learn More →</div>
+    </a>
+    <a href="https://www.csbbankonline.bank/wealth-management/financial-planning" target="_blank" class="service-card">
+      <div class="service-num">02</div>
+      <div class="service-name">Financial Planning</div>
+      <div class="service-desc">Secure your financial future with a personalized roadmap.</div>
+      <div class="service-arrow">Learn More →</div>
+    </a>
+    <a href="https://www.csbbankonline.bank/wealth-management/trust-services" target="_blank" class="service-card">
+      <div class="service-num">03</div>
+      <div class="service-name">Trust Services</div>
+      <div class="service-desc">Protect and distribute your assets exactly how you want.</div>
+      <div class="service-arrow">Learn More →</div>
+    </a>
+    <a href="https://www.csbbankonline.bank/wealth-management/estate-administration" target="_blank" class="service-card">
+      <div class="service-num">04</div>
+      <div class="service-name">Estate Administration</div>
+      <div class="service-desc">Expert assistance in the estate settlement process.</div>
+      <div class="service-arrow">Learn More →</div>
+    </a>
+    <a href="https://www.csbbankonline.bank/wealth-management/investment-products" target="_blank" class="service-card">
+      <div class="service-num">05</div>
+      <div class="service-name">Investment Products</div>
+      <div class="service-desc">Build long-term wealth and achieve your financial goals.</div>
+      <div class="service-arrow">Learn More →</div>
+    </a>
+  </div>
+</section>
+
+<!-- CLIENTS -->
+<section class="clients" id="clients">
+  <div class="clients-text fade-up">
+    <div class="section-eyebrow">Who We Serve</div>
+    <h2 class="section-title">Built for those who think<br>in generations.</h2>
+    <p class="section-body">
+      Whether you're building a dynasty, protecting a business, or seeking guidance for a charitable mission — our team delivers personalized strategies that align with your goals.
+    </p>
+    <a href="https://www.csbbankonline.bank/wealth-management/client-profiles" target="_blank" class="btn-primary" style="background:var(--emerald);color:var(--cream);border:1px solid var(--emerald);">Read More</a>
+  </div>
+  <div class="client-profiles fade-up">
+    <div class="client-profile">
+      <div class="profile-dot"></div>
+      <span class="profile-name">Generational Wealth Builders</span>
+    </div>
+    <div class="client-profile">
+      <div class="profile-dot"></div>
+      <span class="profile-name">Business Owners Looking to Protect Their Assets</span>
+    </div>
+    <div class="client-profile">
+      <div class="profile-dot"></div>
+      <span class="profile-name">Charitable Organizations Seeking Financial Guidance</span>
+    </div>
+    <div class="client-profile">
+      <div class="profile-dot"></div>
+      <span class="profile-name">High-Net-Worth Individuals Seeking Personalized Strategies</span>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process" id="process">
+  <div class="process-header fade-up">
+    <div class="section-eyebrow" style="color:var(--gold);justify-content:center;display:flex;">How We Work</div>
+    <h2 class="process-title"><em>Relationship</em> Based Process</h2>
+  </div>
+  <div class="process-steps">
+    <div class="process-step fade-up">
+      <div class="step-num">01</div>
+      <div class="step-title">Understand Your Goals</div>
+      <div class="step-desc">Our process starts with your unique goals, timeline, and financial picture in mind.</div>
+    </div>
+    <div class="process-step fade-up">
+      <div class="step-num">02</div>
+      <div class="step-title">Build Your Strategy</div>
+      <div class="step-desc">We craft a personalized plan across investment, planning, and trust services.</div>
+    </div>
+    <div class="process-step fade-up">
+      <div class="step-num">03</div>
+      <div class="step-title">Grow & Adjust Together</div>
+      <div class="step-desc">Our partnership continually evolves and adapts alongside your life.</div>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:4rem;">
+    <a href="https://www.csbbankonline.bank/wealth-management/appleseed-story" target="_blank" class="btn-ghost" style="border-color:rgba(201,168,76,0.4);color:var(--gold-pale);">Our Full Story</a>
+  </div>
+</section>
+
+<!-- LOCATION -->
+<section class="location" id="location">
+  <div class="fade-up">
+    <div class="location-label">Visit Us</div>
+    <h2 class="location-title">Stop By Our Offices Today</h2>
+    <div class="location-address">
+      10301 Dawsons Creek Blvd, Ste B<br>
+      Fort Wayne, IN 46825
+    </div>
+    <p class="section-body" style="color:var(--emerald-mid);margin-bottom:2rem;">
+      To schedule time with our team before you come, submit your information on our Contact Us page.
+    </p>
+    <a href="#contact" class="btn-primary">Reach Out Today</a>
+  </div>
+  <div class="map-placeholder fade-up">
+    <div class="map-pin">📍</div>
+    <div class="map-text">Fort Wayne, Indiana</div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-left">
+    <div class="section-eyebrow" style="color:rgba(201,168,76,0.7);">Contact Us</div>
+    <h2 class="contact-title">Start Your Financial <em>Journey</em> With Us</h2>
+    <p class="contact-body">
+      Get in touch with our expert team today to discuss personalized wealth management strategies designed to meet your goals. Whether you're optimizing for long-term growth, securing your business's financial future, or planning for retirement — we're here.
+    </p>
+    <div style="display:flex;flex-direction:column;gap:1rem;">
+      <div style="font-family:'DM Mono',monospace;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(201,168,76,0.6);">Our Location</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:rgba(240,235,224,0.8);font-style:italic;line-height:1.7;">
+        10301 Dawsons Creek Blvd, Ste B<br>Fort Wayne, IN 46825
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="contact-form" id="contactForm">
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name *</label>
+          <input type="text" placeholder="Jane" required>
+        </div>
+        <div class="form-group">
+          <label>Last Name *</label>
+          <input type="text" placeholder="Smith" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email Address *</label>
+        <input type="email" placeholder="jane@example.com" required>
+      </div>
+      <div class="form-group">
+        <label>Phone Number</label>
+        <input type="tel" placeholder="(555) 000-0000">
+      </div>
+      <div class="form-group">
+        <label>Area of Interest</label>
+        <select>
+          <option value="">Select a service...</option>
+          <option>Investment Management</option>
+          <option>Financial Planning</option>
+          <option>Trust Services</option>
+          <option>Estate Administration</option>
+          <option>Investment Products</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Message</label>
+        <textarea placeholder="Tell us about your financial goals..."></textarea>
+      </div>
+      <button type="button" class="form-submit" onclick="submitForm()">Send Message</button>
+    </div>
+    <div class="form-success" id="formSuccess">
+      <p>Thank you for your submission! We will be in touch with you soon.</p>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter">
+  <div class="newsletter-text">
+    <h3 class="newsletter-title">Join Our <em>Mailing List</em></h3>
+    <p class="newsletter-sub">Financial insights and strategies — delivered respectfully to your inbox.</p>
+  </div>
+  <div class="newsletter-form">
+    <input type="email" class="newsletter-input" placeholder="Your email address" id="newsletterEmail">
+    <button class="newsletter-btn" onclick="subscribeNewsletter()">Subscribe</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo">Appleseed <span>Wealth Management</span></div>
+      <p class="footer-tagline">A trusted partner dedicated to protecting, advising, and growing your wealth at every stage of life. An affiliate of Community State Bank.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Our Services</h5>
+      <ul>
+        <li><a href="https://www.csbbankonline.bank/wealth-management/investment-management" target="_blank">Investment Management</a></li>
+        <li><a href="https://www.csbbankonline.bank/wealth-management/financial-planning" target="_blank">Financial Planning</a></li>
+        <li><a href="https://www.csbbankonline.bank/wealth-management/trust-services" target="_blank">Trust Services</a></li>
+        <li><a href="https://www.csbbankonline.bank/wealth-management/estate-administration" target="_blank">Estate Administration</a></li>
+        <li><a href="https://www.csbbankonline.bank/wealth-management/investment-products" target="_blank">Investment Products</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Company</h5>
+      <ul>
+        <li><a href="https://www.csbbankonline.bank/wealth-management/appleseed-team" target="_blank">Our Team</a></li>
+        <li><a href="https://www.csbbankonline.bank/wealth-management/appleseed-story" target="_blank">Our Story</a></li>
+        <li><a href="https://www.csbbankonline.bank/wealth-management/client-profiles" target="_blank">Client Profiles</a></li>
+        <li><a href="#contact">Contact Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-legal">
+      Investment products are not deposits or obligations of, or guaranteed by Community State Bank or any other bank, are not insured or guaranteed by the FDIC or any governmental agency and are subject to investment risks, including possible loss of principal invested. Past performance is not a guarantee of future results.
+    </p>
+    <div class="footer-copy">© 2026 Appleseed Wealth Management</div>
+  </div>
+</footer>
+
+<script>
+  // Scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        // stagger children if needed
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // Contact form
+  function submitForm() {
+    const form = document.getElementById('contactForm');
+    const success = document.getElementById('formSuccess');
+    form.style.display = 'none';
+    success.style.display = 'block';
+  }
+
+  // Newsletter
+  function subscribeNewsletter() {
+    const email = document.getElementById('newsletterEmail');
+    if (email.value && email.value.includes('@')) {
+      email.value = '';
+      email.placeholder = '✓ You\'re subscribed — thank you!';
+      email.style.color = 'var(--gold-light)';
+    }
+  }
+</script>
+</body>
+</html>

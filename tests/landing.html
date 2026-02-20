@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Corporate Financial Solutions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Plus+Jakarta+Sans:wght@600;700;800&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3/dist/cdn.min.js"></script>
+  <style>
+    :root {
+      --primary: hsl(210, 15%, 18%);
+      --primary-mid: hsl(210, 12%, 35%);
+      --primary-light: hsl(210, 10%, 52%);
+      --gold: hsl(250, 72%, 55%);
+      --gold-light: hsl(250, 60%, 68%);
+      --gold-pale: hsl(250, 55%, 90%);
+      --surface: hsl(210, 8%, 97%);
+      --surface-warm: hsl(250, 15%, 93%);
+      --charcoal: #1c1c1c;
+      --text: hsl(210, 10%, 15%);
+      --muted: hsl(210, 5%, 45%);
+    }
+
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: 'Inter', sans-serif; color: var(--text); background: var(--surface); }
+    a { text-decoration: none; color: inherit; }
+    h1, h2, h3 { font-family: 'Plus Jakarta Sans', sans-serif; }
+    .label { font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); }
+
+    nav {
+      position: fixed; top:0; left:0; right:0;
+      backdrop-filter: blur(12px); background: rgba(34, 34, 34, 0.95);
+      border-bottom: 1px solid rgba(var(--gold), 0.25);
+      display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 4rem;
+      z-index: 1000;
+    }
+    nav .logo { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 1.4rem; color: var(--gold); }
+    nav .links { display: flex; gap: 2rem; }
+    nav .links a { font-family: 'DM Mono', monospace; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); }
+    nav .cta { padding: 0.6rem 1.2rem; border: 1px solid var(--gold); border-radius: 0.2rem; font-family: 'DM Mono', monospace; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gold); }
+
+    #hero {
+      min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; padding: 8rem 12rem;
+      background: var(--primary); color: white;
+    }
+    #hero .text {
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    #hero h1 { font-size: clamp(2.8rem, 5vw, 4rem); font-weight: 700; margin-bottom: 1.2rem; }
+    #hero h1 em { font-style: normal; color: var(--gold); }
+    #hero p { font-size: 1.2rem; margin-bottom: 2.4rem; }
+    #hero .buttons { display: flex; gap: 1.6rem; }
+    #hero .buttons a { padding: 0.8rem 1.6rem; border: 2px solid white; border-radius: 0.3rem; font-size: 0.9rem; font-family: 'DM Mono', monospace; text-transform: uppercase; letter-spacing: 0.1em; }
+    #hero .buttons a:hover { background: white; color: var(--primary); }
+    #hero .scroll-indicator { margin-top: 4rem; display: flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; color: rgba(255,255,255,0.6); }
+    #hero .scroll-indicator .line { width: 2px; height: 24px; background: white; animation: scroll 1.5s infinite; }
+    @keyframes scroll { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(12px); } }
+
+    #hero .visual {
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+    #hero .visual svg { width: 400px; height: 400px; }
+    #hero .stats { position: absolute; bottom: 4rem; right: 4rem; display: flex; gap: 2rem; font-family: 'DM Mono', monospace; font-size: 1.1rem; color: rgba(255,255,255,0.7); }
+    #hero .stats span { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; }
+
+    section { padding: 8rem 12rem; }
+    .section-title { margin-bottom: 1.5rem; }
+    .section-title .label { margin-bottom: 0.8rem; }
+
+    #services { background: var(--primary); color: white; }
+    .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2.4rem; }
+    .service-card { background: rgba(255,255,255,0.04); padding: 2rem; border-radius: 0.5rem; transition: 0.3s; }
+    .service-card:hover { background: rgba(255,255,255,0.08); }
+    .service-card .number { font-family: 'DM Mono', monospace; font-size: 1.4rem; color: var(--gold); margin-bottom: 1rem; }
+    .service-card h3 { font-size: 1.2rem; margin-bottom: 0.8rem; }
+    .service-card p { opacity: 0.8; margin-bottom: 1.2rem; }
+    .service-card a { font-family: 'DM Mono', monospace; font-size: 0.9rem; color: var(--gold); opacity: 0.7; transition: opacity 0.3s; }
+    .service-card a:hover { opacity: 1; }
+
+    #process { background: var(--charcoal); color: white; }
+    .process-steps { display: flex; align-items: center; gap: 4rem; }
+    .process-step { text-align: center; }
+    .process-step .number { font-size: 4rem; opacity: 0.15; margin-bottom: 1rem; }
+    .process-step h3 { font-size: 1.2rem; margin-bottom: 0.8rem; }
+    .process-step p { max-width: 240px; margin: 0 auto; opacity: 0.7; }
+
+    #contact { background: var(--primary); color: white; }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+    .contact-info { display: flex; flex-direction: column; gap: 2rem; }
+    .contact-info p { margin: 0; }
+    .contact-form { display: flex; flex-direction: column; gap: 1.6rem; }
+    .contact-form label { font-family: 'DM Mono', monospace; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 0.4rem; }
+    .contact-form input, .contact-form textarea { background: rgba(255,255,255,0.05); border: 1px solid rgba(var(--gold), 0.2); padding: 0.8rem 1rem; border-radius: 0; }
+    .contact-form button { padding: 0.8rem 1.6rem; background: var(--gold); color: var(--primary); font-family: 'DM Mono', monospace; text-transform: uppercase; letter-spacing: 0.1em; border: none; }
+
+    .newsletter { background: var(--charcoal); color: white; padding: 4rem 12rem; display: flex; align-items: center; gap: 4rem; }
+    .newsletter .text { flex: 1; }
+    .newsletter .text h2 { font-size: 1.8rem; margin-bottom: 1rem; }
+    .newsletter .text p { opacity: 0.8; margin-bottom: 2rem; }
+    .newsletter .form { display: flex; gap: 1rem; }
+    .newsletter input { flex: 1; padding: 0.8rem 1rem; border: 1px solid rgba(255,255,255,0.2); border-right: none; border-radius: 0; background: transparent; }
+    .newsletter button { padding: 0.8rem 1.6rem; background: var(--gold); color: var(--primary); font-family: 'DM Mono', monospace; text-transform: uppercase; letter-spacing: 0.1em; border: none; }
+
+    footer { background: var(--primary); color: white; padding: 4rem 12rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 4rem; border-top: 1px solid rgba(var(--gold), 0.15); }
+    footer .footer-col { display: flex; flex-direction: column; gap: 1.2rem; }
+    footer .footer-col h3 { font-size: 1.1rem; margin-bottom: 0.8rem; }
+    footer .footer-col ul { list-style: none; padding: 0; margin: 0; }
+    footer .footer-col li { margin-bottom: 0.4rem; }
+    footer .legal { margin-top: 4rem; font-size: 0.65rem; color: rgba(255,255,255,0.5); }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="logo">Corporate Financial</div>
+    <div class="links">
+      <a href="#services">Services</a>
+      <a href="#process">Process</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <a href="#contact" class="cta">Get Started</a>
+  </nav>
+
+  <section id="hero">
+    <div class="text">
+      <div class="label">Strategic Financial Planning</div>
+      <h1>Empowering Your <em>Financial Future</em></h1>
+      <p>Comprehensive wealth management solutions tailored to your unique goals. Our team of experts provides personalized guidance to help you achieve long-term financial success.</p>
+      <div class="buttons">
+        <a href="#contact">Schedule a Consultation</a>
+        <a href="#services">Explore Our Services</a>
+      </div>
+      <div class="scroll-indicator">
+        <div class="line"></div>
+        <span>Scroll to discover</span>
+      </div>
+    </div>
+    <div class="visual">
+      <svg viewBox="0 0 400 400">
+        <circle cx="200" cy="200" r="180" stroke="rgba(255,255,255,0.1)" stroke-width="2" fill="none"/>
+        <circle cx="200" cy="200" r="140" stroke="rgba(255,255,255,0.2)" stroke-width="2" fill="none"/>
+        <circle cx="200" cy="200" r="100" stroke="rgba(255,255,255,0.3)" stroke-width="2" fill="none"/>
+      </svg>
+      <div class="stats">
+        <span><strong>15+</strong> Years Experience</span>
+        <span><strong>200+</strong> Clients Served</span>
+        <span><strong>98%</strong> Satisfaction Rate</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="mission">
+    <div class="section-title">
+      <div class="label">Our Mission</div>
+    </div>
+    <h2>Building Lasting Financial Relationships</h2>
+    <p>At Corporate Financial, we believe in creating long-term partnerships with our clients. Our mission is to provide innovative financial solutions that help individuals and businesses achieve their goals through strategic planning, disciplined execution, and continuous support.</p>
+    <div class="pillars" style="display: flex; gap: 4rem; margin-top: 3rem;">
+      <div>
+        <h3>Protect</h3>
+        <p>Preserve your wealth through comprehensive risk management strategies and asset protection planning.</p>
+      </div>
+      <div>
+        <h3>Advise</h3>
+        <p>Receive personalized guidance tailored to your unique financial situation and objectives.</p>
+      </div>
+      <div>
+        <h3>Grow</h3>
+        <p>Maximize your wealth potential through strategic investment solutions and tax-efficient planning.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="services" style="background: var(--primary); color: white; padding: 8rem 12rem;">
+    <div class="section-title">
+      <div class="label">Our Services</div>
+    </div>
+    <div class="service-grid">
+      <div class="service-card">
+        <div class="number">01</div>
+        <h3>Retirement Planning</h3>
+        <p>Develop a customized retirement strategy that ensures financial security and peace of mind.</p>
+        <a href="#">Learn More →</a>
+      </div>
+      <div class="service-card">
+        <div class="number">02</div>
+        <h3>Investment Management</h3>
+        <p>Access diversified investment portfolios designed to meet your risk tolerance and financial goals.</p>
+        <a href="#">Learn More →</a>
+      </div>
+      <div class="service-card">
+        <div class="number">03</div>
+        <h3>Tax Planning</h3>
+        <p>Optimize your tax strategy to minimize liabilities and maximize after-tax returns.</p>
+        <a href="#">Learn More →</a>
+      </div>
+      <div class="service-card">
+        <div class="number">04</div>
+        <h3>Estate Planning</h3>
+        <p>Create a comprehensive estate plan to protect your legacy and ensure your wishes are carried out.</p>
+        <a href="#">Learn More →</a>
+      </div>
+      <div class="service-card">
+        <div class="number">05</div>
+        <h3>Business Advisory</h3>
+        <p>Receive expert guidance on business succession planning, M&A strategies, and operational efficiency.</p>
+        <a href="#">Learn More →</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="clients" style="background: var(--surface-warm); padding: 8rem 12rem;">
+    <div class="section-title">
+      <div class="label">Trusted by Industry Leaders</div>
+    </div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+      <div>
+        <h2>Partnering with Visionary Organizations</h2>
+        <p>Our clients include Fortune 500 companies, family offices, and high-net-worth individuals who trust our expertise to navigate complex financial landscapes.</p>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 1.2rem;">
+        <div style="display: flex; align-items: center; gap: 0.8rem;">
+          <div style="width: 12px; height: 12px; background: var(--gold); border-radius: 50%;"></div>
+          <span>GlobalTech Solutions</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.8rem;">
+          <div style="width: 12px; height: 12px; background: var(--gold); border-radius: 50%;"></div>
+          <span>GreenEnergy Holdings</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.8rem;">
+          <div style="width: 12px; height: 12px; background: var(--gold); border-radius: 50%;"></div>
+          <span>Legacy Family Office</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="process" style="background: var(--charcoal); color: white; padding: 8rem 12rem;">
+    <div class="section-title">
+      <div class="label">Our Process</div>
+    </div>
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="number">1</div>
+        <h3>Discovery</h3>
+        <p>Conduct a comprehensive assessment of your financial situation, goals, and risk tolerance.</p>
+      </div>
+      <div class="process-step">
+        <div class="number">2</div>
+        <h3>Strategy</h3>
+        <p>Develop a customized financial plan that aligns with your objectives and time horizon.</p>
+      </div>
+      <div class="process-step">
+        <div class="number">3</div>
+        <h3>Implementation</h3>
+        <p>Execute the plan through strategic investment allocations and tax-efficient strategies.</p>
+      </div>
+      <div class="process-step">
+        <div class="number">4</div>
+        <h3>Monitoring</h3>
+        <p>Provide ongoing oversight and adjustments to ensure your plan remains on track.</p>
+      </div>
+    </div>
+    <div style="margin-top: 4rem; text-align: center;">
+      <a href="#contact" style="padding: 0.8rem 1.6rem; background: var(--gold); color: var(--primary); font-family: 'DM Mono', monospace; text-transform: uppercase; letter-spacing: 0.1em; border: none; display: inline-block;">Start Your Journey</a>
+    </div>
+  </section>
+
+  <section id="news" style="padding: 8rem 12rem; background: var(--surface);">
+    <div class="section-title">
+      <div class="label">Latest Insights</div>
+    </div>
+    <h2>Financial News & AI Briefing</h2>
+    <div style="margin-top: 3rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+      <div x-data="newsComponent()" x-init="fetchNews()">
+        <template x-if="news.length > 0">
+          <div class="news-grid" x-show="news.length > 0">
+            <template x-for="item in news" :key="item.id">
+              <div class="news-card" x-data="{ expanded: false }">
+                <div class="news-header">
+                  <h3 x-text="item.title"></h3>
+                  <span class="date" x-text="item.date"></span>
+                </div>
+                <div class="news-content" x-show="expanded" x-collapse>
+                  <p x-text="item.summary"></p>
+                  <a href="#" @click.prevent="expanded = !expanded" x-text="expanded ? 'Read Less' : 'Read More'"></a>
+                </div>
+              </div>
+            </template>
+          </div>
+        </template>
+        <template x-if="loading">
+          <div class="loading-state">
+            <div class="spinner"></div>
+            <p>Loading latest financial insights...</p>
+          </div>
+        </template>
+      </div>
+    </div>
+  </section>
+
+  <section id="retirement" style="padding: 8rem 12rem; background: var(--surface);">
+    <div class="section-title">
+      <div class="label">Retirement Planning</div>
+    </div>
+    <h2>Retirement Plan Search & Strategy</h2>
+    <div style="margin-top: 3rem; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;">
+      <div>
+        <p>Find the right retirement plan for your business and develop a comprehensive strategy to ensure long-term financial security for you and your employees.</p>
+        <div x-data="retirementComponent()" class="retirement-form">
+          <form @submit.prevent="submitForm">
+            <div class="form-group">
+              <label for="companyType">Company Type</label>
+              <select id="companyType" x-model="formData.companyType" required>
+                <option value="">Select Company Type</option>
+                <option value="corporation">Corporation</option>
+                <option value="llc">LLC</option>
+                <option value="partnership">Partnership</option>
+                <option value="sole-proprietorship">Sole Proprietorship</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="employeeCount">Employee Count</label>
+              <input type="number" id="employeeCount" x-model.number="formData.employeeCount" min="1" required>
+            </div>
+            <div class="form-group">
+              <label for="annualContribution">Annual Contribution</label>
+              <input type="number" id="annualContribution" x-model.number="formData.annualContribution" min="0" required>
+            </div>
+            <button type="submit" :disabled="loading" class="submit-btn">
+              <span x-show="!loading">Find Plans</span>
+              <span x-show="loading" class="spinner"></span>
+            </button>
+          </form>
+        </div>
+      </div>
+      <div>
+        <div x-show="results.length > 0" class="results">
+          <h3>Recommended Plans</h3>
+          <div x-for="plan in results" :key="plan.id" class="plan-card">
+            <h4 x-text="plan.name"></h4>
+            <p x-text="plan.description"></p>
+            <div class="plan-details">
+              <div><strong>Annual Cost:</strong> $<span x-text="plan.cost"></span></div>
+              <div><strong>Employees Covered:</strong> <span x-text="plan.employeeCount"></span></div>
+              <div><strong>Contribution Limit:</strong> $<span x-text="plan.contributionLimit"></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="location" style="background: var(--gold-pale); padding: 8rem 12rem;">
+    <div class="section-title">
+      <div class="label">Visit Us</div>
+    </div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+      <div>
+        <h2>Our Office Location</h2>
+        <p>123 Financial District<br>456 Wealth Management Blvd<br>New York, NY 10001</p>
+        <p>Phone: (555) 123-4567<br>Email: info@corporatefinancial.com</p>
+      </div>
+      <div>
+        <iframe 
+          src="https://maps.google.com/maps?q=New%20York&t=&z=13&ie=UTF8&iwloc=&output=embed" 
+          width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy">
+        </iframe>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" style="background: var(--primary); color: white; padding: 8rem 12rem;">
+    <div class="section-title">
+      <div class="label">Get in Touch</div>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h2>Have Questions?</h2>
+        <p>Our team of financial experts is here to help you navigate your financial journey. Contact us today to schedule a consultation and start building your future.</p>
+        <div style="display: flex; gap: 2rem; margin-top: 2rem;">
+          <div>
+            <i class="fas fa-map-marker-alt"></i> 123 Financial District, New York
+          </div>
+          <div>
+            <i class="fas fa-phone"></i> (555) 123-4567
+          </div>
+          <div>
+            <i class="fas fa-envelope"></i> info@corporatefinancial.com
+          </div>
+        </div>
+      </div>
+      <div class="contact-form">
+        <form>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.6rem;">
+            <div>
+              <label for="name">Name</label>
+              <input type="text" id="name" required>
+            </div>
+            <div>
+              <label for="email">Email</label>
+              <input type="email" id="email" required>
+            </div>
+            <div>
+              <label for="phone">Phone</label>
+              <input type="tel" id="phone">
+            </div>
+            <div>
+              <label for="interest">Area of Interest</label>
+              <select id="interest">
+                <option value="">Select an option</option>
+                <option value="retirement">Retirement Planning</option>
+                <option value="investment">Investment Management</option>
+                <option value="tax">Tax Planning</option>
+                <option value="estate">Estate Planning</option>
+              </select>
+            </div>
+          </div>
+          <div style="margin-top: 1.6rem;">
+            <label for="message">Message</label>
+            <textarea id="message" rows="5" required></textarea>
+          </div>
+          <button type="submit">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section class="newsletter">
+    <div class="text">
+      <h2>Stay Informed with Financial Insights</h2>
+      <p>Subscribe to our newsletter for the latest market updates, investment strategies, and financial planning tips delivered directly to your inbox.</p>
+    </div>
+    <div class="form">
+      <input type="email" placeholder="Enter your email address">
+      <button type="submit">Subscribe</button>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-col">
+      <h3>Corporate Financial</h3>
+      <p>Providing comprehensive financial solutions since 2008. Our mission is to help clients achieve their financial goals through personalized service and expert guidance.</p>
+    </div>
+    <div class="footer-col">
+      <h3>Services</h3>
+      <ul>
+        <li><a href="#services">Retirement Planning</a></li>
+        <li><a href="#services">Investment Management</a></li>
+        <li><a href="#services">Tax Planning</a></li>
+        <li><a href="#services">Estate Planning</a></li>
+        <li><a href="#services">Business Advisory</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h3>Company</h3>
+      <ul>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#careers">Careers</a></li>
+        <li><a href="#blog">Blog</a></li>
+        <li><a href="#privacy">Privacy Policy</a></li>
+        <li><a href="#terms">Terms of Service</a></li>
+      </ul>
+    </div>
+    <div class="legal">
+      <p>© 2023 Corporate Financial. All rights reserved.</p>
+      <p>Financial advisory services offered through licensed representatives of Corporate Financial Advisors, LLC.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('alpine:init', () => {
+      Alpine.data('newsComponent', () => ({
+        loading: true,
+        news: [],
+        fetchNews() {
+          // Simulated API call
+          setTimeout(() => {
+            this.news = [
+              { id: 1, title: 'Market Volatility: What You Need to Know', date: 'April 5, 2024', summary: 'Recent market fluctuations have created opportunities for strategic investors. Our team provides insights on navigating current market conditions...' },
+              { id: 2, title: 'New Tax Legislation Impact', date: 'March 28, 2024', summary: 'The recently passed tax bill includes significant changes to retirement account contributions and estate tax thresholds...' },
+              { id: 3, title: 'AI in Financial Planning', date: 'March 15, 2024', summary: 'Artificial intelligence is transforming financial planning by providing more accurate projections and personalized recommendations...' }
+            ];
+            this.loading = false;
+          }, 1500);
+        }
+      }));
+      
+      Alpine.data('retirementComponent', () => ({
+        loading: false,
+        results: [],
+        formData: {
+          companyType: '',
+          employeeCount: 1,
+          annualContribution: 0
+        },
+        submitForm() {
+          this.loading = true;
+          // Simulated API call
+          setTimeout(() => {
+            this.results = [
+              { id: 1, name: '401(k) Plan', description: 'Ideal for corporations with 50+ employees', cost: 2500, employeeCount: 'Unlimited', contributionLimit: 22500 },
+              { id: 2, name: 'SEP IRA', description: 'Perfect for small businesses with variable contributions', cost: 800, employeeCount: 'Up to 25', contributionLimit: 66000 },
+              { id: 3, name: 'SIMPLE IRA', description: 'Great for small businesses with matching contributions', cost: 1200, employeeCount: 'Up to 100', contributionLimit: 15500 }
+            ];
+            this.loading = false;
+          }, 1500);
+        }
+      }));
+    });
+  </script>
+</body>
+</html>
