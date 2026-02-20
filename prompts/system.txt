@@ -271,6 +271,21 @@ Write CSS for ALL of these:
     mission/clients/location/contact single column, services 2-col grid.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+DESIGN VARIATION — MANDATORY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• Do NOT copy any reference/sample HTML (including index_claude.html).
+  Generate a fresh design each time based on the design direction.
+• Use the provided "Layout approach" to vary grid rhythm, spacing, and card composition.
+  Example mappings:
+  - asymmetric grid: staggered offsets, uneven column widths, varied card heights.
+  - magazine layout: editorial column widths, strong typographic hierarchy, generous whitespace.
+  - bento grid: mixed card sizes, tight gaps, modular blocks.
+  - hero-first split: oversized hero, reduced mid-page density.
+  - card-dominant: sections framed as cards with borders/shadows.
+• Keep all mandatory HTML structures, but vary backgrounds, dividers, shadows,
+  decorative lines, and ring sizes/opacity to avoid identical look.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 CONTENT RULES
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 • Use ALL real content from snapshot: services, address, phone, team, copy.
@@ -284,6 +299,7 @@ CONTENT RULES
 REQUIRED INTERACTIVE SECTIONS — MANDATORY
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Include both sections from the user message EXACTLY as given (all Alpine.js unchanged).
+All fetch URLs must be relative paths like /api/get-news, /api/plan-search, /api/plan-strategy (never hardcode a domain).
 Write CSS for all their BEM classes in <style>. Key rules:
   .news-section: bg=surface; padding 8rem 6rem. .news-section__container: max-width:1200px; margin:0 auto.
   .news-cards: display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem.
@@ -293,9 +309,24 @@ Write CSS for all their BEM classes in <style>. Key rules:
   .news-briefing: border; bg:white; padding:2rem; shadow. .news-briefing__grid: 2-col grid.
   .news-briefing__icon-wrap: 3rem square; gold bg; flex center; icon.
   .plan-section: bg=surface-warm; padding 8rem 6rem. .plan-section__container: max-width:900px; margin:0 auto.
-  .plan-search-input: full width; large padding; border; no border-radius; font; focus gold border.
+  .plan-search-input: full width; large padding; border; no border-radius; font; focus gold border;
+    IMPORTANT: use dark text on light bg (color:var(--text)) and white or surface background.
+    Set ::placeholder color to var(--muted).
+    Make it feel premium: thicker border (2px), gentle inner shadow, and enough left padding
+    for the search icon; height ~56-64px.
   .plan-dropdown: absolute; white bg; shadow; z-index:20; max-height:20rem; overflow-y:auto.
-  .plan-cards: display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem.
+  .plan-dropdown: full width, rounded corners (0.75-1rem), soft border, subtle shadow,
+    padding 0.5rem, and each .plan-dropdown__item should look like a premium card:
+    display:flex; justify-content:space-between; align-items:center; gap:1rem;
+    background:var(--surface); border:1px solid hsla(var(--ph),var(--ps),var(--pl),0.12);
+    padding:1rem 1.25rem; margin:0.4rem 0; transition; hover: bg white + stronger shadow.
+    .plan-dropdown__name = label font + uppercase + tighter spacing; plan name larger;
+    location muted with icon.
+  .plan-cards: THIS MUST BE A HORIZONTAL CAROUSEL (no JS):
+    display:grid; grid-auto-flow:column; grid-auto-columns:minmax(280px, 1fr);
+    gap:1.5rem; overflow-x:auto; scroll-snap-type:x mandatory; padding-bottom:1rem;
+    -webkit-overflow-scrolling:touch; scrollbar styles subtle.
+    .plan-card { scroll-snap-align:start; min-width:320px; }
   .plan-card--strengths: green-tinted bg + border. .plan-card--issues: red-tinted. .plan-card--actions: blue-tinted.
   .plan-card__icon: 3rem square; colored bg; flex center. .plan-loading__ring--spin: animation spin 0.8s linear infinite.
 

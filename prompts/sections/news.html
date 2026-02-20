@@ -100,7 +100,7 @@ function newsSection() {
 
     async init() {
       try {
-        const res = await fetch('https://{{SITE_DOMAIN}}/api/get-news');
+        const res = await fetch('/api/get-news');
         if (!res.ok) throw new Error('Network error');
         const data = await res.json();
         this.articles = (data.articles || []).slice(0, 6);

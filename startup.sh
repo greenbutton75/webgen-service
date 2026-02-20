@@ -4,7 +4,7 @@ set -e
 REPO="greenbutton75/webgen-service"
 BRANCH="main"
 MODEL_ID="${WEBGEN_MODEL:-Qwen/Qwen2.5-Coder-32B-Instruct-AWQ}"
-GPU_COUNT="${WEBGEN_GPU_COUNT:-2}"
+GPU_COUNT="${WEBGEN_GPU_COUNT:-1}"
 MAX_MODEL_LEN="${WEBGEN_MAX_MODEL_LEN:-32768}"
 DATA_DIR="${WEBGEN_DATA_DIR:-/workspace/data}"
 SERVICE_PORT="${WEBGEN_PORT:-7860}"
@@ -24,7 +24,7 @@ apt-get update -qq && apt-get install -y -qq git curl python3-pip python3-venv
 
 # ── Python deps ───────────────────────────────────────────────────────────────
 pip install -q --upgrade pip
-pip install -q vllm
+pip install -q "vllm==0.15.1"
 pip install -q fastapi "uvicorn[standard]" httpx python-multipart aiofiles
 
 # ── Install HF CLI ────────────────────────────────────────────────────────────

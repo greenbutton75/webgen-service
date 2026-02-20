@@ -170,7 +170,7 @@ function planSection() {
       if (this.query.length < 2) { this.results = []; return; }
       this.searching = true;
       try {
-        const res = await fetch('https://{{SITE_DOMAIN}}/api/plan-search', {
+        const res = await fetch('/api/plan-search', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ query: this.query, count: 10 })
@@ -192,7 +192,7 @@ function planSection() {
       this.strategyError = false;
       this.strategyLoading = true;
       try {
-        const res = await fetch('https://{{SITE_DOMAIN}}/api/plan-strategy', {
+        const res = await fetch('/api/plan-strategy', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ ein: plan.ein, pn: plan.pn, planName: plan.planName })
