@@ -39,6 +39,8 @@ Design direction for this site:
 - Visual style: {design['style']}
 - Layout approach: {design['layout']}
 - Typography: {design['typography']}
+- Font pair: {design['font_hint']}
+- Google Fonts URL params: {design['google_fonts']}
 - Primary accent hue (HSL): {design['accent_hue']} ({design['palette_name']})
 
 Website content snapshot (Markdown):
@@ -46,10 +48,10 @@ Website content snapshot (Markdown):
 {content}
 ---
 
-REQUIRED SECTION 1 — News & AI Briefing (adapt colors/fonts to your design, keep all JS fetch logic exactly as written):
+REQUIRED SECTION 1 — News & AI Briefing (restyle to match your CSS, keep all JS fetch logic exactly as written):
 {news_tpl}
 
-REQUIRED SECTION 2 — Retirement Plan Search + Strategy (adapt colors/fonts to your design, keep all JS fetch logic exactly as written):
+REQUIRED SECTION 2 — Retirement Plan Search + Strategy (restyle to match your CSS, keep all JS fetch logic exactly as written):
 {plan_tpl}
 
 Now generate the complete HTML file."""
