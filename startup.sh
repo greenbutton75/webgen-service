@@ -59,11 +59,11 @@ mkdir -p "$DATA_DIR/results"
 echo "Starting vLLM on port $VLLM_PORT ..."
 python -m vllm.entrypoints.openai.api_server \
   --model "$MODEL_DIR" \
-  --quantization awq \
+  --quantization awq_marlin \
   --tensor-parallel-size "$GPU_COUNT" \
   --max-model-len "$MAX_MODEL_LEN" \
   --gpu-memory-utilization 0.92 \
-  --dtype half \
+  --dtype bfloat16 \
   --port "$VLLM_PORT" \
   --served-model-name "webgen-model" \
   > "$DATA_DIR/vllm.log" 2>&1 &
