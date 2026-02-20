@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 VLLM_URL = os.getenv("WEBGEN_VLLM_URL", "http://localhost:8000")
 MODEL_NAME = os.getenv("WEBGEN_MODEL", "Qwen/Qwen2.5-Coder-32B-Instruct-AWQ")
-MAX_TOKENS = int(os.getenv("WEBGEN_MAX_TOKENS", "12288"))
+MAX_TOKENS = int(os.getenv("WEBGEN_MAX_TOKENS", "10000"))
 TIMEOUT = 600  # 10 min — large sites can take a while
 
 PROMPTS_DIR = Path(os.getenv("WEBGEN_PROMPTS_DIR", "prompts"))

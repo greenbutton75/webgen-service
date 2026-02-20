@@ -4,11 +4,12 @@ import re
 from dataclasses import dataclass
 from typing import Optional
 
-# ~50k tokens single pass is safe for 32B-AWQ with 65k max_model_len
-# (leaves ~15k for output + templates in prompt)
-MAX_TOKENS_SINGLE_PASS = 48_000
-# Hard cap — above this we truncate aggressively
-MAX_TOKENS_HARD_LIMIT = 60_000
+# Model native max: 32768 tokens
+# Fixed overhead (system prompt + section templates): ~5000 tokens
+# Output reserve: 10000 tokens
+# Available for site content: 32768 - 5000 - 10000 = 17768 → safe limit 16000
+MAX_TOKENS_SINGLE_PASS = 16_000
+MAX_TOKENS_HARD_LIMIT = 16_000
 
 
 @dataclass

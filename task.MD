@@ -588,3 +588,13 @@ if [ -z "$STITCH_API_KEY" ]; then
 fi
 ```
 
+Делаем Add SSH keys, добавляем 
+ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEA17hNg7cjwFUhCY0oVVc8xsBO5yuadnN7+7wG0zrZQ7xw1GKtI9i0UnwXwmfXGcFlvxgXw87VYkC6nXg/HdnHpUGae5KonVnJ44+9XSGNMWH3a//JiSQ2LFhETHmeYKrlzLo36NL8v9Im28LwtBxQ0bgUjDTxZPlBg3vwF4xBK5pnnjySaVZHJ38BKd/EfPJnV1vyLR2MvPzons/rVBZkhD+HcL1YmqEbUbtE7dKkgmdFMDZZmFR4mKBWtpLw8doOg5Ks2kwQm2DaOQjRwC3yi1k5ls0jBxNYmSXJ98wX2+4+lxtavkzwLPEMykyXd4UR5xLNQLb29g6sH4aLhUzCHQ==
+
+ЗАБИРАЕМ ОТТУДА ssh -p 57626 root@24.124.32.70 -L 8080:localhost:8080
+и выполняем его в PowerShell (подожди, пока машина стартует)
+
+Затем нажимаем на инстансе на синий IP адрес - он показывает на какие эфемерные порты проброшен 8000
+типа 24.124.32.70:57950 -> 8000/tcp
+
+207.180.148.74:45070 -> 7860/tcp

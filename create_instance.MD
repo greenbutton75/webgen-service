@@ -45,11 +45,11 @@ pytorch/pytorch:2.4.0-cuda12.1-cudnn9-devel
 ```
 HF_TOKEN=hf_xxxxxxxxxxxxxxxxxxxxxxxx
 WEBGEN_GPU_COUNT=1
-WEBGEN_MAX_MODEL_LEN=65536
 ```
 
 > **1× A100 80GB** → `WEBGEN_GPU_COUNT=1`  
-> **2× A100 40GB** → `WEBGEN_GPU_COUNT=2`
+> **2× A100 40GB** → `WEBGEN_GPU_COUNT=2`  
+> `WEBGEN_MAX_MODEL_LEN` не указывать — дефолт 32768 (нативный лимит модели)
 
 ---
 
