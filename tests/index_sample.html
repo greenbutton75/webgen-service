@@ -1,0 +1,296 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Retirement Plan Advisory</title>
+    
+    <!-- Подключаем Tailwind CSS для стилей -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Шрифты как в оригинале -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+
+    <!-- Настройка темы (Цвета будут меняться JS-ом) -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'serif'],
+                    },
+                    colors: {
+                        primary: 'var(--color-primary)', 
+                        secondary: 'var(--color-secondary)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Дефолтные цвета (Site 1 - Синий) */
+        :root {
+            --color-primary: #0f172a;   /* Slate 900 */
+            --color-secondary: #2563eb; /* Blue 600 */
+        }
+        
+        /* Стили для таблицы результатов */
+        .result-table th { @apply px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider; }
+        .result-table td { @apply px-6 py-4 whitespace-nowrap text-sm text-gray-900 border-b border-gray-100; }
+        .result-table tr:last-child td { border-bottom: none; }
+        
+        /* Анимация загрузки */
+        .loader {
+            border: 3px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 3px solid var(--color-secondary);
+            width: 24px;
+            height: 24px;
+            -webkit-animation: spin 1s linear infinite; /* Safari */
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="font-sans antialiased text-gray-900 bg-white">
+
+    <!-- NAV -->
+    <nav class="fixed w-full z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <a href="#" class="font-serif text-2xl font-bold text-primary tracking-tight cursor-pointer">
+                    <span id="nav-company-name">Money Matters</span> <span class="text-secondary">USA</span>
+                </a>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#services" class="text-sm font-medium text-gray-700 hover:text-primary transition-colors">Services</a>
+                    <a href="#expertise" class="text-sm font-medium text-gray-700 hover:text-primary transition-colors">Expertise</a>
+                    <a href="#health-check" class="text-sm font-medium text-gray-700 hover:text-primary transition-colors">Health Check</a>
+                    <button class="inline-flex items-center justify-center rounded-md text-sm transition-colors focus:outline-none border border-transparent bg-primary hover:opacity-90 text-white font-medium px-6 py-2">
+                        Schedule Consultation
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- HERO SECTION -->
+        <section class="relative h-[90vh] min-h-[600px] flex items-center overflow-hidden">
+            <div class="absolute inset-0 z-0">
+                <!-- Заменил локальную картинку на Unsplash -->
+                <img alt="Corporate Boardroom" class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2301&auto=format&fit=crop">
+                <div class="absolute inset-0 bg-gradient-to-r from-primary/95 via-primary/80 to-transparent"></div>
+            </div>
+            <div class="container mx-auto px-4 relative z-10">
+                <div class="max-w-2xl">
+                    <span class="inline-block px-4 py-1.5 mb-6 text-sm font-semibold tracking-wider text-secondary uppercase bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
+                        For Plan Sponsors with 100+ Employees
+                    </span>
+                    <h1 class="text-5xl md:text-6xl lg:text-7xl font-serif font-bold text-white mb-6 leading-tight">
+                        Longevity is the <br><span class="text-secondary italic">New Reality.</span>
+                    </h1>
+                    <p class="text-xl text-gray-200 mb-8 leading-relaxed font-light">
+                        Is your retirement plan ready? We transform standard 401(k)s into strategic assets that protect fiduciaries and secure employee futures.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="#health-check" class="inline-flex items-center justify-center gap-2 rounded-md bg-secondary hover:bg-secondary/90 text-white text-lg h-14 px-8 font-medium transition-all">
+                            Analyze My Plan
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SERVICES GRID -->
+        <section id="services" class="py-24 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-3xl md:text-4xl font-serif font-bold text-primary mb-6">Why Our Expertise is a Must-Have</h2>
+                    <div class="w-24 h-1 bg-secondary mx-auto"></div>
+                </div>
+                <div class="grid md:grid-cols-3 gap-12">
+                    <div class="text-center group p-6 rounded-xl hover:bg-slate-50 transition-colors">
+                        <div class="mb-6 inline-flex p-4 rounded-2xl bg-primary/5 text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 7h6v6"></path><path d="m22 7-8.5 8.5-5-5L2 17"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-4">Longevity is the New Reality</h3>
+                        <p class="text-gray-600 leading-relaxed">People are living longer. If you’re still planning on old models, you’re leaving participants vulnerable.</p>
+                    </div>
+                    <div class="text-center group p-6 rounded-xl hover:bg-slate-50 transition-colors">
+                        <div class="mb-6 inline-flex p-4 rounded-2xl bg-primary/5 text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><path d="M16 3.128a4 4 0 0 1 0 7.744"></path><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><circle cx="9" cy="7" r="4"></circle></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-4">Holistic, Client-First Thinking</h3>
+                        <p class="text-gray-600 leading-relaxed">We weave together investment choices, life-stage events, tax strategies, and estate planning into a single roadmap.</p>
+                    </div>
+                    <div class="text-center group p-6 rounded-xl hover:bg-slate-50 transition-colors">
+                        <div class="mb-6 inline-flex p-4 rounded-2xl bg-primary/5 text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-4">A Proven Fiduciary Leader</h3>
+                        <p class="text-gray-600 leading-relaxed">We offer research-based, bias-free advice rooted in data, not product pitches. Your fiduciary safety is our priority.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEARCH / HEALTH CHECK SECTION -->
+        <section id="health-check" class="py-24 bg-gradient-to-b from-slate-50 to-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-4xl md:text-5xl font-serif font-bold text-primary mb-4">Your Retirement Plan Health Check</h2>
+                    <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                        Get an instant assessment of your company's retirement plan. Search by company name or EIN to see personalized insights.
+                    </p>
+                </div>
+                
+                <!-- SEARCH INTERFACE -->
+                <div class="max-w-4xl mx-auto bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
+                    <div class="flex flex-col md:flex-row gap-4 mb-6 relative">
+                        <div class="relative flex-grow">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.34-4.34"></path></svg>
+                            <input 
+                                id="searchInput"
+                                class="w-full pl-12 pr-4 h-14 text-lg rounded-xl border-2 border-gray-200 focus:border-secondary focus:ring-0 outline-none transition-colors" 
+                                placeholder="Search by company name or EIN..." 
+                                type="text" 
+                                value="311121926"
+                            >
+                        </div>
+                        <button onclick="searchPlans()" class="h-14 px-8 bg-secondary hover:bg-secondary/90 text-white font-bold rounded-xl text-lg transition-colors flex items-center justify-center gap-2">
+                            <span>Search Database</span>
+                            <div id="loading" class="loader hidden"></div>
+                        </button>
+                    </div>
+
+                    <!-- RESULTS AREA (Hidden by default) -->
+                    <div id="resultsArea" class="hidden">
+                        <div class="border rounded-xl overflow-hidden">
+                            <table class="w-full result-table">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th>Plan Name</th>
+                                        <th>Sponsor</th>
+                                        <th>EIN</th>
+                                        <th>Location</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="resultsBody" class="bg-white">
+                                    <!-- Rows will be injected here -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="noResults" class="hidden p-8 text-center text-gray-500">
+                            No plans found. Please check the EIN or Name and try again.
+                        </div>
+                    </div>
+                    
+                    <div id="errorMsg" class="hidden mt-4 p-4 bg-red-50 text-red-700 rounded-lg text-sm text-center font-medium"></div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-900 text-white py-12 border-t border-slate-800">
+        <div class="container mx-auto px-4 text-center">
+            <h3 class="font-serif text-2xl font-bold mb-4"><span id="footer-company-name">Money Matters</span> <span class="text-secondary">USA</span></h3>
+            <p class="text-slate-400 text-sm">© 2026 All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- LOGIC -->
+    <script>
+        // --- 1. DYNAMIC THEME LOGIC (MULTITENANCY) ---
+        const hostname = window.location.hostname;
+        const root = document.documentElement;
+
+        // Определяем, какой это сайт, по домену
+        if (hostname.includes('testadv22') || hostname.includes('site2')) {
+            // RED THEME (Omega Financial)
+            root.style.setProperty('--color-primary', '#2a0f0f');   // Dark Red/Black
+            root.style.setProperty('--color-secondary', '#dc2626'); // Bright Red
+            
+            document.title = "Omega Financial Advisors";
+            document.getElementById('nav-company-name').textContent = "Omega Financial";
+            document.getElementById('footer-company-name').textContent = "Omega Financial";
+        } else {
+            // BLUE THEME (Default / Alpha Wealth)
+            // Цвета уже заданы в style :root, менять не надо
+            document.title = "Money Matters USA";
+        }
+
+        // --- 2. SEARCH LOGIC ---
+        async function searchPlans() {
+            const query = document.getElementById('searchInput').value;
+            const resultsArea = document.getElementById('resultsArea');
+            const resultsBody = document.getElementById('resultsBody');
+            const noResults = document.getElementById('noResults');
+            const loading = document.getElementById('loading');
+            const errorMsg = document.getElementById('errorMsg');
+
+            // UI Reset
+            errorMsg.classList.add('hidden');
+            resultsArea.classList.add('hidden');
+            loading.classList.remove('hidden');
+
+            try {
+                // Call API relative path. 
+                // CloudFront Function will add the Token & Host header.
+                const response = await fetch('/api/plan-search', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        query: query, 
+                        count: 10, 
+                        showEmpty: true 
+                    })
+                });
+
+                if (!response.ok) throw new Error('API Request Failed');
+
+                const data = await response.json();
+                
+                // Clear previous
+                resultsBody.innerHTML = '';
+
+                if (data.records && data.records.length > 0) {
+                    data.records.forEach(rec => {
+                        const row = document.createElement('tr');
+                        row.classList.add('hover:bg-gray-50', 'transition-colors');
+                        row.innerHTML = `
+                            <td class="font-medium text-primary">${rec.planName}</td>
+                            <td>${rec.sponsorName}</td>
+                            <td><span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">${rec.ein}</span></td>
+                            <td class="text-gray-500">${rec.city}, ${rec.state}</td>
+                        `;
+                        resultsBody.appendChild(row);
+                    });
+                    noResults.classList.add('hidden');
+                    resultsArea.classList.remove('hidden');
+                } else {
+                    resultsArea.classList.remove('hidden');
+                    noResults.classList.remove('hidden');
+                }
+
+            } catch (err) {
+                console.error(err);
+                errorMsg.textContent = "Error searching plans. Please try again later.";
+                errorMsg.classList.remove('hidden');
+            } finally {
+                loading.classList.add('hidden');
+            }
+        }
+
+        // Allow 'Enter' key to search
+        document.getElementById('searchInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') searchPlans();
+        });
+    </script>
+</body>
+</html>

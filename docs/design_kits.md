@@ -57,3 +57,8 @@ meaningfully changes the look.
 2. Add kit selection logic in `design_seed.py`.
 3. Update prompt builder to pass kit data.
 4. Run batch tests and tune kit rules.
+
+## Current draft kits
+- docs/design_kits/kit_claude2.md
+- docs/design_kits/kit_sample.md
+- docs/design_kits/kit_sample1.md

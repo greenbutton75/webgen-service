@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Appleseed Wealth Management</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0d0d0d;
+  --paper: #f2ede4;
+  --paper-dark: #e5dfd3;
+  --accent: #d4380d;
+  --accent2: #2563a8;
+  --mid: #6e6760;
+  --rule: rgba(13,13,13,0.12);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'IBM Plex Sans', sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+/* ── TICKER ── */
+.ticker {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0.55rem 0;
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+}
+.ticker-inner {
+  display: inline-block;
+  animation: ticker 28s linear infinite;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.ticker-inner span { margin: 0 3rem; color: var(--accent); }
+@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ── NAV ── */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--paper);
+  border-bottom: 2px solid var(--ink);
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: stretch;
+}
+
+.nav-logo-block {
+  border-right: 2px solid var(--ink);
+  padding: 1rem 2rem;
+  display: flex; align-items: center;
+}
+.nav-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.5rem;
+  letter-spacing: 0.1em;
+  color: var(--ink);
+  text-decoration: none;
+  line-height: 1;
+}
+.nav-logo sup {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.45rem;
+  letter-spacing: 0.05em;
+  color: var(--accent);
+  vertical-align: super;
+  font-weight: 500;
+}
+
+.nav-links {
+  display: flex; list-style: none; align-items: stretch;
+  padding: 0 2rem; gap: 2rem;
+}
+.nav-links li { display: flex; align-items: center; }
+.nav-links a {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mid);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.nav-links a:hover { color: var(--ink); }
+
+.nav-cta-block {
+  border-left: 2px solid var(--ink);
+  display: flex;
+}
+.nav-cta {
+  display: flex; align-items: center;
+  padding: 1rem 2rem;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: var(--accent);
+  color: white;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.nav-cta:hover { background: #b82f08; }
+
+/* ── HERO ── */
+.hero {
+  display: grid;
+  grid-template-rows: auto auto;
+  border-bottom: 2px solid var(--ink);
+}
+
+.hero-top {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  border-bottom: 2px solid var(--ink);
+}
+
+.hero-headline {
+  padding: 5rem 4rem 4rem;
+  border-right: 2px solid var(--ink);
+  position: relative;
+}
+
+.issue-tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--mid);
+  margin-bottom: 2.5rem;
+  display: flex; align-items: center; gap: 1rem;
+}
+.issue-tag::before {
+  content: ''; display: block;
+  width: 1.5rem; height: 2px; background: var(--accent);
+}
+
+h1.hero-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(5rem, 10vw, 10rem);
+  line-height: 0.9;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  margin-bottom: 0;
+}
+h1.hero-title .red { color: var(--accent); }
+h1.hero-title .blue { color: var(--accent2); }
+
+.hero-sub {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--mid);
+  font-weight: 300;
+  max-width: 480px;
+  margin-top: 2.5rem;
+  font-style: italic;
+}
+
+.hero-aside {
+  display: flex; flex-direction: column;
+  justify-content: space-between;
+  padding: 3rem 2.5rem;
+}
+.hero-aside-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--mid);
+  margin-bottom: 1rem;
+}
+.hero-aside-text {
+  font-size: 1rem;
+  line-height: 1.7;
+  font-weight: 300;
+  color: var(--ink);
+  flex: 1;
+  margin-bottom: 2rem;
+}
+.hero-btns { display: flex; flex-direction: column; gap: 0.8rem; }
+.btn-fill {
+  display: block; text-align: center;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 0.9rem 1.5rem;
+  background: var(--ink); color: var(--paper);
+  text-decoration: none; border: 2px solid var(--ink);
+  transition: all 0.2s;
+}
+.btn-fill:hover { background: transparent; color: var(--ink); }
+.btn-outline {
+  display: block; text-align: center;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 0.9rem 1.5rem;
+  background: transparent; color: var(--ink);
+  text-decoration: none; border: 2px solid var(--ink);
+  transition: all 0.2s;
+}
+.btn-outline:hover { background: var(--ink); color: var(--paper); }
+
+/* Hero bottom bar */
+.hero-bottom {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+.hero-stat {
+  padding: 2rem 3rem;
+  border-right: 2px solid var(--ink);
+  display: flex; flex-direction: column; gap: 0.3rem;
+}
+.hero-stat:last-child { border-right: none; }
+.stat-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--mid);
+}
+.stat-value {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.8rem;
+  letter-spacing: 0.05em;
+  color: var(--ink);
+  line-height: 1;
+}
+.stat-value.red { color: var(--accent); }
+
+/* ── MISSION ── */
+.mission {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  border-bottom: 2px solid var(--ink);
+}
+.mission-sidebar {
+  border-right: 2px solid var(--ink);
+  padding: 3rem 2rem;
+  background: var(--ink);
+  display: flex; flex-direction: column; gap: 3rem;
+}
+.sidebar-heading {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3.5rem;
+  letter-spacing: 0.05em;
+  line-height: 0.95;
+  color: var(--paper);
+  writing-mode: horizontal-tb;
+}
+.sidebar-heading .accent { color: var(--accent); }
+.sidebar-subtext {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(242,237,228,0.4);
+  line-height: 1.8;
+}
+
+.mission-content {
+  padding: 4rem;
+}
+.mission-lead {
+  font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+  line-height: 1.5;
+  font-weight: 300;
+  color: var(--ink);
+  margin-bottom: 3rem;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 3rem;
+}
+.mission-lead strong { font-weight: 700; }
+
+.pillars {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+}
+.pillar {
+  padding: 2rem 2rem 2rem 0;
+  border-right: 1px solid var(--rule);
+  padding-right: 2rem;
+}
+.pillar:last-child { border-right: none; padding-right: 0; }
+.pillar:not(:first-child) { padding-left: 2rem; }
+.pillar-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--accent);
+  letter-spacing: 0.1em;
+  margin-bottom: 0.8rem;
+}
+.pillar-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.8rem;
+  letter-spacing: 0.05em;
+  color: var(--ink);
+  margin-bottom: 0.6rem;
+}
+.pillar-body {
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: var(--mid);
+  font-weight: 300;
+}
+
+/* ── SERVICES ── */
+.services {
+  border-bottom: 2px solid var(--ink);
+}
+.services-header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: baseline;
+  padding: 2.5rem 4rem;
+  border-bottom: 2px solid var(--ink);
+  background: var(--paper-dark);
+}
+.services-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.5rem;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+}
+.services-count {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mid);
+}
+
+.services-list {
+  display: flex; flex-direction: column;
+}
+.service-row {
+  display: grid;
+  grid-template-columns: 60px 1fr 1fr auto;
+  align-items: center;
+  padding: 1.8rem 4rem;
+  border-bottom: 1px solid var(--rule);
+  text-decoration: none;
+  color: var(--ink);
+  transition: background 0.15s;
+  gap: 2rem;
+}
+.service-row:hover { background: var(--ink); }
+.service-row:hover * { color: var(--paper) !important; }
+.service-row:hover .svc-arrow { opacity: 1; }
+
+.svc-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+}
+.svc-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.8rem;
+  letter-spacing: 0.05em;
+}
+.svc-desc {
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--mid);
+  font-weight: 300;
+}
+.svc-arrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink);
+  opacity: 0;
+  transition: opacity 0.15s;
+  white-space: nowrap;
+}
+
+/* ── CLIENTS ── */
+.clients {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: 2px solid var(--ink);
+  min-height: 480px;
+}
+.clients-left {
+  border-right: 2px solid var(--ink);
+  padding: 4rem;
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.section-tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mid);
+  margin-bottom: 1.5rem;
+}
+.clients-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 5vw, 5rem);
+  letter-spacing: 0.03em;
+  line-height: 0.95;
+  color: var(--ink);
+}
+.clients-title .red { color: var(--accent); }
+
+.clients-right {
+  padding: 4rem;
+  display: flex; flex-direction: column; justify-content: center;
+  gap: 0;
+}
+.profile-item {
+  display: grid;
+  grid-template-columns: 2rem 1fr;
+  gap: 1rem;
+  align-items: start;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+.profile-item:first-child { border-top: 1px solid var(--rule); }
+.profile-idx {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--accent);
+  margin-top: 0.2rem;
+}
+.profile-text {
+  font-size: 1rem;
+  line-height: 1.5;
+  font-weight: 300;
+  color: var(--ink);
+}
+
+/* ── PROCESS ── */
+.process {
+  border-bottom: 2px solid var(--ink);
+  background: var(--accent);
+  padding: 5rem 4rem;
+}
+.process-header {
+  display: flex; align-items: baseline; justify-content: space-between;
+  margin-bottom: 4rem;
+  border-bottom: 2px solid rgba(255,255,255,0.3);
+  padding-bottom: 2rem;
+}
+.process-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 6vw, 5.5rem);
+  letter-spacing: 0.05em;
+  color: white;
+  line-height: 0.95;
+}
+.process-sub {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+}
+.process-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+}
+.process-step {
+  padding: 2.5rem 3rem 2.5rem 0;
+  border-right: 1px solid rgba(255,255,255,0.2);
+}
+.process-step:last-child { border-right: none; }
+.process-step:not(:first-child) { padding-left: 3rem; padding-right: 0; }
+.process-step:nth-child(2) { padding-right: 3rem; }
+
+.step-number {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 5rem;
+  line-height: 1;
+  color: rgba(255,255,255,0.15);
+  margin-bottom: 0.5rem;
+}
+.step-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.8rem;
+  letter-spacing: 0.05em;
+  color: white;
+  margin-bottom: 0.8rem;
+}
+.step-desc {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.7);
+  font-weight: 300;
+}
+
+/* ── LOCATION ── */
+.location {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: 2px solid var(--ink);
+}
+.location-text {
+  padding: 5rem 4rem;
+  border-right: 2px solid var(--ink);
+}
+.location-eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mid);
+  margin-bottom: 1.5rem;
+}
+.location-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 5vw, 4.5rem);
+  letter-spacing: 0.03em;
+  line-height: 0.95;
+  color: var(--ink);
+  margin-bottom: 3rem;
+}
+.address-block {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.85rem;
+  line-height: 2;
+  color: var(--ink);
+  border-left: 4px solid var(--accent);
+  padding-left: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.location-visual {
+  background: var(--paper-dark);
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+  min-height: 400px;
+}
+.loc-grid {
+  position: absolute; inset: 0;
+  background-image: 
+    linear-gradient(rgba(13,13,13,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(13,13,13,0.06) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+.loc-pin {
+  position: relative; z-index: 1;
+  text-align: center;
+}
+.loc-pin-dot {
+  width: 16px; height: 16px;
+  background: var(--accent);
+  border-radius: 50%;
+  margin: 0 auto 0.5rem;
+  box-shadow: 0 0 0 8px rgba(212,56,13,0.2);
+}
+.loc-pin-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: var(--paper);
+  padding: 0.4rem 0.8rem;
+  border: 1px solid var(--rule);
+}
+
+/* ── CONTACT ── */
+.contact {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  border-bottom: 2px solid var(--ink);
+}
+.contact-sidebar {
+  background: var(--ink);
+  padding: 4rem 2.5rem;
+  border-right: 2px solid var(--ink);
+  display: flex; flex-direction: column; gap: 3rem;
+}
+.contact-sidebar-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3.5rem;
+  letter-spacing: 0.05em;
+  line-height: 0.95;
+  color: var(--paper);
+}
+.contact-sidebar-title .red { color: var(--accent); }
+.contact-sidebar-body {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  font-weight: 300;
+  color: rgba(242,237,228,0.6);
+  font-style: italic;
+}
+.contact-info { display: flex; flex-direction: column; gap: 1.2rem; }
+.contact-info-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.3rem;
+}
+.contact-info-val {
+  font-size: 0.88rem;
+  color: rgba(242,237,228,0.8);
+  font-style: italic;
+  line-height: 1.5;
+}
+
+.contact-form-area {
+  padding: 4rem;
+}
+.form-section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.8rem;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.cf { display: flex; flex-direction: column; gap: 1rem; }
+.cf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.cf-group { display: flex; flex-direction: column; gap: 0.4rem; }
+.cf-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--mid);
+}
+.cf-input, .cf-select, .cf-textarea {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid var(--ink);
+  padding: 0.7rem 0;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.95rem;
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.2s;
+  -webkit-appearance: none;
+  border-radius: 0;
+}
+.cf-input::placeholder, .cf-textarea::placeholder { color: rgba(13,13,13,0.25); }
+.cf-input:focus, .cf-select:focus, .cf-textarea:focus { border-color: var(--accent); }
+.cf-textarea { resize: vertical; min-height: 100px; }
+.cf-select option { background: var(--paper); }
+
+.cf-submit {
+  align-self: flex-start;
+  background: var(--ink);
+  color: var(--paper);
+  border: 2px solid var(--ink);
+  padding: 0.9rem 2.5rem;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 0.5rem;
+}
+.cf-submit:hover { background: transparent; color: var(--ink); }
+
+.form-success {
+  display: none;
+  padding: 2rem;
+  border: 2px solid var(--ink);
+  background: var(--paper-dark);
+}
+.form-success p {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 1rem;
+  color: var(--ink);
+  font-style: italic;
+}
+
+/* ── NEWSLETTER ── */
+.newsletter {
+  border-bottom: 2px solid var(--ink);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.nl-left {
+  padding: 4rem;
+  border-right: 2px solid var(--ink);
+  background: var(--accent2);
+}
+.nl-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.5rem, 4vw, 4rem);
+  letter-spacing: 0.05em;
+  color: white;
+  line-height: 0.95;
+  margin-bottom: 1rem;
+}
+.nl-sub {
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.65);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.7;
+}
+.nl-right {
+  padding: 4rem;
+  display: flex; flex-direction: column; justify-content: center; gap: 1.5rem;
+}
+.nl-form { display: flex; flex-direction: column; gap: 0; }
+.nl-input {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid var(--ink);
+  padding: 1rem 0;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 1rem;
+  color: var(--ink);
+  outline: none;
+  margin-bottom: 1.5rem;
+}
+.nl-input::placeholder { color: rgba(13,13,13,0.3); }
+.nl-input:focus { border-color: var(--accent2); }
+.nl-btn {
+  align-self: flex-start;
+  background: var(--accent2);
+  color: white;
+  border: 2px solid var(--accent2);
+  padding: 0.9rem 2.5rem;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.nl-btn:hover { background: transparent; color: var(--accent2); }
+.nl-legal {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.05em;
+  color: var(--mid);
+  line-height: 1.6;
+}
+
+/* ── FOOTER ── */
+footer {
+  background: var(--ink);
+}
+.footer-top {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.footer-brand {
+  padding: 4rem;
+  border-right: 1px solid rgba(255,255,255,0.08);
+}
+.footer-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  letter-spacing: 0.1em;
+  color: var(--paper);
+  margin-bottom: 1rem;
+}
+.footer-logo sup { font-family: 'IBM Plex Mono', monospace; font-size: 0.5rem; color: var(--accent); vertical-align: super; }
+.footer-tagline {
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: rgba(242,237,228,0.4);
+  font-weight: 300;
+  font-style: italic;
+  max-width: 300px;
+}
+
+.footer-col {
+  padding: 4rem 3rem;
+  border-right: 1px solid rgba(255,255,255,0.08);
+}
+.footer-col:last-child { border-right: none; }
+.footer-col-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.5rem;
+}
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; }
+.footer-col a {
+  font-size: 0.88rem;
+  color: rgba(242,237,228,0.5);
+  text-decoration: none;
+  font-weight: 300;
+  transition: color 0.15s;
+}
+.footer-col a:hover { color: var(--paper); }
+
+.footer-bottom {
+  padding: 2rem 4rem;
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 3rem;
+}
+.footer-legal {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.03em;
+  color: rgba(242,237,228,0.2);
+  max-width: 700px;
+  line-height: 1.7;
+}
+.footer-copy {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6rem;
+  color: rgba(242,237,228,0.25);
+  white-space: nowrap;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1024px) {
+  .hero-top { grid-template-columns: 1fr; }
+  .hero-aside { border-top: 2px solid var(--ink); }
+  .hero-headline { padding: 3rem 2rem 2rem; }
+  .hero-aside { padding: 2rem; }
+  .hero-bottom { grid-template-columns: repeat(3, 1fr); }
+  .mission { grid-template-columns: 1fr; }
+  .mission-sidebar { writing-mode: horizontal-tb; }
+  .mission-content { padding: 2.5rem; }
+  .pillars { grid-template-columns: 1fr; gap: 1.5rem; }
+  .pillar { border-right: none; border-bottom: 1px solid var(--rule); padding: 0 0 1.5rem; }
+  .pillar:last-child { border-bottom: none; }
+  .pillar:not(:first-child) { padding-left: 0; }
+  .service-row { grid-template-columns: 40px 1fr; padding: 1.5rem 2rem; }
+  .svc-desc, .svc-arrow { display: none; }
+  .clients { grid-template-columns: 1fr; }
+  .clients-left { border-right: none; border-bottom: 2px solid var(--ink); }
+  .process-steps { grid-template-columns: 1fr; }
+  .process-step { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.15); padding: 2rem 0; }
+  .process-step:not(:first-child) { padding-left: 0; }
+  .process-step:nth-child(2) { padding-right: 0; }
+  .location { grid-template-columns: 1fr; }
+  .location-text { border-right: none; border-bottom: 2px solid var(--ink); }
+  .contact { grid-template-columns: 1fr; }
+  .contact-sidebar { border-right: none; border-bottom: 2px solid var(--ink); }
+  .newsletter { grid-template-columns: 1fr; }
+  .nl-left { border-right: none; border-bottom: 2px solid var(--ink); }
+  .footer-top { grid-template-columns: 1fr; }
+  .footer-brand { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .footer-col { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); padding: 2.5rem 2rem; }
+  .footer-bottom { flex-direction: column; padding: 2rem; }
+  nav { grid-template-columns: 1fr auto; }
+  .nav-links { display: none; }
+}
+@media (max-width: 640px) {
+  .hero-bottom { grid-template-columns: 1fr; }
+  .hero-stat { border-right: none; border-bottom: 1px solid var(--rule); }
+  .cf-row { grid-template-columns: 1fr; }
+  .services-header, .contact-form-area, .location-text,
+  .clients-left, .clients-right, .nl-right, .nl-left,
+  .process { padding: 2.5rem 1.5rem; }
+  .mission-content { padding: 2rem 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    Wealth Management You Can Trust <span>✦</span>
+    Fort Wayne, Indiana <span>✦</span>
+    Investment Management <span>✦</span>
+    Financial Planning <span>✦</span>
+    Trust Services <span>✦</span>
+    Estate Administration <span>✦</span>
+    Protect. Advise. Grow. <span>✦</span>
+    CSB Affiliate <span>✦</span>
+    Wealth Management You Can Trust <span>✦</span>
+    Fort Wayne, Indiana <span>✦</span>
+    Investment Management <span>✦</span>
+    Financial Planning <span>✦</span>
+    Trust Services <span>✦</span>
+    Estate Administration <span>✦</span>
+    Protect. Advise. Grow. <span>✦</span>
+    CSB Affiliate <span>✦</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo-block">
+    <a href="#" class="nav-logo">Appleseed<sup>WM</sup></a>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#clients">Who We Serve</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#location">Location</a></li>
+  </ul>
+  <div class="nav-cta-block">
+    <a href="#contact" class="nav-cta">Contact Us →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-top">
+    <div class="hero-headline">
+      <div class="issue-tag">Appleseed Wealth Management — Fort Wayne, IN</div>
+      <h1 class="hero-title">
+        <span class="red">Wealth</span><br>
+        Manage<span class="blue">ment</span><br>
+        You Can<br>
+        Trust.
+      </h1>
+      <p class="hero-sub">
+        Our team is here to help you protect your future. Let's build your financial legacy together.
+      </p>
+    </div>
+    <div class="hero-aside">
+      <div>
+        <div class="hero-aside-label">Our Mission</div>
+        <div class="hero-aside-text">
+          We are dedicated to becoming a trusted partner that helps you achieve financial security at every stage of life — through personalized investment solutions and human-centered advice.
+        </div>
+      </div>
+      <div class="hero-btns">
+        <a href="https://www.csbbankonline.bank/wealth-management/appleseed-team" target="_blank" class="btn-fill">Meet Our Team</a>
+        <a href="#contact" class="btn-outline">Start a Conversation</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-bottom">
+    <div class="hero-stat">
+      <div class="stat-label">Core Services</div>
+      <div class="stat-value red">05</div>
+    </div>
+    <div class="hero-stat">
+      <div class="stat-label">Location</div>
+      <div class="stat-value" style="font-size:1.6rem;letter-spacing:0.02em;">Fort Wayne<br>Indiana</div>
+    </div>
+    <div class="hero-stat">
+      <div class="stat-label">Established Under</div>
+      <div class="stat-value" style="font-size:1.8rem;">CSB Bank</div>
+    </div>
+  </div>
+</section>
+
+<!-- MISSION -->
+<section class="mission" id="mission">
+  <div class="mission-sidebar">
+    <div class="sidebar-heading">Pro<span class="accent">tect</span><br>Ad<span class="accent">vise</span><br>Grow.</div>
+    <div class="sidebar-subtext">
+      APPLESEED WEALTH<br>
+      MANAGEMENT<br><br>
+      AN AFFILIATE OF<br>
+      COMMUNITY<br>
+      STATE BANK
+    </div>
+  </div>
+  <div class="mission-content">
+    <p class="mission-lead">
+      Our Mission is to <strong>protect</strong> your financial future, <strong>advise</strong> with strategic insights, and <strong>grow</strong> your wealth through personalized investment solutions.
+    </p>
+    <div class="pillars">
+      <div class="pillar">
+        <div class="pillar-num">01 — Protect</div>
+        <div class="pillar-title">Safeguard</div>
+        <div class="pillar-body">Shield your assets and financial future against uncertainty and market volatility.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">02 — Advise</div>
+        <div class="pillar-title">Strategize</div>
+        <div class="pillar-body">Expert, personalized insights tailored to your unique financial situation and goals.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">03 — Grow</div>
+        <div class="pillar-title">Expand</div>
+        <div class="pillar-body">Long-term investment solutions built to compound and multiply your wealth.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="services-header">
+    <div class="services-title">Our Services</div>
+    <div class="services-count">05 offerings</div>
+  </div>
+  <div class="services-list">
+    <a href="https://www.csbbankonline.bank/wealth-management/investment-management" target="_blank" class="service-row">
+      <div class="svc-num">01</div>
+      <div class="svc-name">Investment Management</div>
+      <div class="svc-desc">Build and protect your wealth with the help of our experienced team.</div>
+      <div class="svc-arrow">Learn More →</div>
+    </a>
+    <a href="https://www.csbbankonline.bank/wealth-management/financial-planning" target="_blank" class="service-row">
+      <div class="svc-num">02</div>
+      <div class="svc-name">Financial Planning</div>
+      <div class="svc-desc">Secure your financial future with a personalized roadmap.</div>
+      <div class="svc-arrow">Learn More →</div>
+    </a>
+    <a href="https://www.csbbankonline.bank/wealth-management/trust-services" target="_blank" class="service-row">
+      <div class="svc-num">03</div>
+      <div class="svc-name">Trust Services</div>
+      <div class="svc-desc">Protect and distribute your assets exactly how you want.</div>
+      <div class="svc-arrow">Learn More →</div>
+    </a>
+    <a href="https://www.csbbankonline.bank/wealth-management/estate-administration" target="_blank" class="service-row">
+      <div class="svc-num">04</div>
+      <div class="svc-name">Estate Administration</div>
+      <div class="svc-desc">Expert assistance in the estate settlement process.</div>
+      <div class="svc-arrow">Learn More →</div>
+    </a>
+    <a href="https://www.csbbankonline.bank/wealth-management/investment-products" target="_blank" class="service-row">
+      <div class="svc-num">05</div>
+      <div class="svc-name">Investment Products</div>
+      <div class="svc-desc">Build long-term wealth and achieve your financial goals.</div>
+      <div class="svc-arrow">Learn More →</div>
+    </a>
+  </div>
+</section>
+
+<!-- CLIENTS -->
+<section class="clients" id="clients">
+  <div class="clients-left">
+    <div>
+      <div class="section-tag">Who We Serve</div>
+      <h2 class="clients-title">Built for<br>Those Who<br>Think in<br><span class="red">Generations.</span></h2>
+    </div>
+    <a href="https://www.csbbankonline.bank/wealth-management/client-profiles" target="_blank" class="btn-fill" style="align-self:flex-start;margin-top:2rem;">Read More →</a>
+  </div>
+  <div class="clients-right">
+    <div class="profile-item">
+      <div class="profile-idx">01</div>
+      <div class="profile-text">Generational Wealth Builders</div>
+    </div>
+    <div class="profile-item">
+      <div class="profile-idx">02</div>
+      <div class="profile-text">Business Owners Looking to Protect Their Assets</div>
+    </div>
+    <div class="profile-item">
+      <div class="profile-idx">03</div>
+      <div class="profile-text">Charitable Organizations Seeking Financial Guidance</div>
+    </div>
+    <div class="profile-item">
+      <div class="profile-idx">04</div>
+      <div class="profile-text">High-Net-Worth Individuals Seeking Personalized Financial Strategies</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process" id="process">
+  <div class="process-header">
+    <h2 class="process-title">Relationship<br>Based Process</h2>
+    <div class="process-sub">How We Work</div>
+  </div>
+  <div class="process-steps">
+    <div class="process-step">
+      <div class="step-number">01</div>
+      <div class="step-name">Understand Goals</div>
+      <div class="step-desc">Our process starts with your unique goals, timeline, and financial picture in mind.</div>
+    </div>
+    <div class="process-step">
+      <div class="step-number">02</div>
+      <div class="step-name">Build Strategy</div>
+      <div class="step-desc">We craft a personalized plan across investment, planning, and trust services.</div>
+    </div>
+    <div class="process-step">
+      <div class="step-number">03</div>
+      <div class="step-name">Grow Together</div>
+      <div class="step-desc">Our partnership continually evolves and adapts alongside your life and goals.</div>
+    </div>
+  </div>
+</section>
+
+<!-- LOCATION -->
+<section class="location" id="location">
+  <div class="location-text">
+    <div class="location-eyebrow">Visit Us</div>
+    <h2 class="location-title">Stop By<br>Our Office<br>Today.</h2>
+    <div class="address-block">
+      10301 Dawsons Creek Blvd<br>
+      Suite B<br>
+      Fort Wayne, IN 46825
+    </div>
+    <a href="#contact" class="btn-fill" style="display:inline-block;">Reach Out Today →</a>
+  </div>
+  <div class="location-visual">
+    <div class="loc-grid"></div>
+    <div class="loc-pin">
+      <div class="loc-pin-dot"></div>
+      <div class="loc-pin-label">Fort Wayne, Indiana</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-sidebar">
+    <div>
+      <div class="contact-sidebar-title">Start Your<br>Financial<br><span class="red">Journey.</span></div>
+    </div>
+    <div class="contact-sidebar-body">
+      Whether you're optimizing wealth for long-term growth, securing your business's financial future, or planning for retirement — our team provides personalized strategies that align with your goals.
+    </div>
+    <div class="contact-info">
+      <div>
+        <div class="contact-info-label">Address</div>
+        <div class="contact-info-val">10301 Dawsons Creek Blvd, Ste B<br>Fort Wayne, IN 46825</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-form-area">
+    <div class="form-section-title">Get In Touch</div>
+    <div class="cf" id="contactForm">
+      <div class="cf-row">
+        <div class="cf-group">
+          <label class="cf-label">First Name *</label>
+          <input type="text" class="cf-input" placeholder="Jane">
+        </div>
+        <div class="cf-group">
+          <label class="cf-label">Last Name *</label>
+          <input type="text" class="cf-input" placeholder="Smith">
+        </div>
+      </div>
+      <div class="cf-group">
+        <label class="cf-label">Email Address *</label>
+        <input type="email" class="cf-input" placeholder="jane@example.com">
+      </div>
+      <div class="cf-group">
+        <label class="cf-label">Phone Number</label>
+        <input type="tel" class="cf-input" placeholder="(555) 000-0000">
+      </div>
+      <div class="cf-group">
+        <label class="cf-label">Area of Interest</label>
+        <select class="cf-select">
+          <option value="">Select a service...</option>
+          <option>Investment Management</option>
+          <option>Financial Planning</option>
+          <option>Trust Services</option>
+          <option>Estate Administration</option>
+          <option>Investment Products</option>
+        </select>
+      </div>
+      <div class="cf-group">
+        <label class="cf-label">Message</label>
+        <textarea class="cf-textarea" placeholder="Tell us about your financial goals..."></textarea>
+      </div>
+      <button class="cf-submit" onclick="submitForm()">Send Message →</button>
+    </div>
+    <div class="form-success" id="formSuccess">
+      <p>Thank you for your submission! We will be in touch with you soon.</p>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter" id="newsletter">
+  <div class="nl-left">
+    <h3 class="nl-title">Join Our<br>Mailing<br>List.</h3>
+    <p class="nl-sub">Financial insights and strategies — delivered respectfully, only when it matters.</p>
+  </div>
+  <div class="nl-right">
+    <div>
+      <div class="section-tag">Subscribe</div>
+      <p style="font-size:0.95rem;line-height:1.7;color:var(--mid);font-weight:300;font-style:italic;margin-bottom:1.5rem;">
+        Stay informed on relevant market trends and Appleseed updates. You can opt out at any time by unsubscribing.
+      </p>
+    </div>
+    <div class="nl-form">
+      <input type="email" class="nl-input" placeholder="Your email address" id="nlEmail">
+      <button class="nl-btn" onclick="subscribeNL()">Subscribe →</button>
+    </div>
+    <div class="nl-legal">We respect your inbox. No spam, ever.</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo">Appleseed<sup>WM</sup></div>
+      <p class="footer-tagline">A trusted wealth management partner dedicated to protecting, advising, and growing your financial future. An affiliate of Community State Bank, Fort Wayne, Indiana.</p>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Services</div>
+      <ul>
+        <li><a href="https://www.csbbankonline.bank/wealth-management/investment-management" target="_blank">Investment Management</a></li>
+        <li><a href="https://www.csbbankonline.bank/wealth-management/financial-planning" target="_blank">Financial Planning</a></li>
+        <li><a href="https://www.csbbankonline.bank/wealth-management/trust-services" target="_blank">Trust Services</a></li>
+        <li><a href="https://www.csbbankonline.bank/wealth-management/estate-administration" target="_blank">Estate Administration</a></li>
+        <li><a href="https://www.csbbankonline.bank/wealth-management/investment-products" target="_blank">Investment Products</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Company</div>
+      <ul>
+        <li><a href="https://www.csbbankonline.bank/wealth-management/appleseed-team" target="_blank">Our Team</a></li>
+        <li><a href="https://www.csbbankonline.bank/wealth-management/appleseed-story" target="_blank">Our Story</a></li>
+        <li><a href="https://www.csbbankonline.bank/wealth-management/client-profiles" target="_blank">Client Profiles</a></li>
+        <li><a href="#contact">Contact Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-legal">
+      Investment products are not deposits or obligations of, or guaranteed by Community State Bank or any other bank, are not insured or guaranteed by the FDIC or any governmental agency and are subject to investment risks, including possible loss of principal invested. Past performance is not a guarantee of future results.
+    </p>
+    <div class="footer-copy">© 2026 Appleseed WM</div>
+  </div>
+</footer>
+
+<script>
+function submitForm() {
+  document.getElementById('contactForm').style.display = 'none';
+  document.getElementById('formSuccess').style.display = 'block';
+}
+function subscribeNL() {
+  const el = document.getElementById('nlEmail');
+  if (el.value && el.value.includes('@')) {
+    el.value = '';
+    el.placeholder = '✓ Subscribed — thank you!';
+  }
+}
+</script>
+</body>
+</html>
