@@ -37,7 +37,7 @@ if [ -d "$WORKDIR/.git" ]; then
   cd "$WORKDIR" && git pull --ff-only
 else
   echo "Cloning repo..."
-  git clone "https://github.com/${REPO}.git" "$WORKDIR"
+  git clone --branch main --single-branch "https://github.com/${REPO}.git" "$WORKDIR"
 fi
 cd "$WORKDIR"
 
