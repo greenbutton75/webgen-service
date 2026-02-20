@@ -254,8 +254,14 @@ Write CSS for ALL of these:
    .map-placeholder::before: radial-gradient glow at center.
 
 8. CONTACT: display:grid; grid-template-columns:1fr 1fr; gap:8rem. bg=primary color=surface.
+   .contact-form should feel aligned and clean (no crooked spacing).
    .form-row: display:grid; grid-template-columns:1fr 1fr; gap:1.2rem.
-   inputs: bg:rgba(255,255,255,0.05); border:1px solid hsla(gh,gs,gl,0.2); border-radius:0; color:surface; focus: border-color=gold.
+   .form-group: display:flex; flex-direction:column; gap:0.5rem.
+   labels: label font; uppercase; letter-spacing:0.12em; color:hsla(surface,0.7).
+   inputs/select/textarea: width:100%; box-sizing:border-box; min-height:48px;
+     background:rgba(255,255,255,0.12) (avoid tone-on-tone), border:1px solid hsla(gh,gs,gl,0.35);
+     border-radius:0.4rem; color:surface; padding:0.9rem 1.1rem;
+     ::placeholder color:hsla(surface,0.5); focus border-color=gold.
    .form-submit: bg=gold; color=primary; label font; no border-radius.
    .form-success: display:none initially; border:1px solid hsla(gold,0.4).
 
@@ -309,24 +315,27 @@ Write CSS for all their BEM classes in <style>. Key rules:
   .news-briefing: border; bg:white; padding:2rem; shadow. .news-briefing__grid: 2-col grid.
   .news-briefing__icon-wrap: 3rem square; gold bg; flex center; icon.
   .plan-section: bg=surface-warm; padding 8rem 6rem. .plan-section__container: max-width:900px; margin:0 auto.
-  .plan-search-input: full width; large padding; border; no border-radius; font; focus gold border;
-    IMPORTANT: use dark text on light bg (color:var(--text)) and white or surface background.
-    Set ::placeholder color to var(--muted).
-    Make it feel premium: thicker border (2px), gentle inner shadow, and enough left padding
-    for the search icon; height ~56-64px.
-  .plan-dropdown: absolute; white bg; shadow; z-index:20; max-height:20rem; overflow-y:auto.
-  .plan-dropdown: full width, rounded corners (0.75-1rem), soft border, subtle shadow,
-    padding 0.5rem, and each .plan-dropdown__item should look like a premium card:
-    display:flex; justify-content:space-between; align-items:center; gap:1rem;
-    background:var(--surface); border:1px solid hsla(var(--ph),var(--ps),var(--pl),0.12);
-    padding:1rem 1.25rem; margin:0.4rem 0; transition; hover: bg white + stronger shadow.
-    .plan-dropdown__name = label font + uppercase + tighter spacing; plan name larger;
-    location muted with icon.
-  .plan-cards: THIS MUST BE A HORIZONTAL CAROUSEL (no JS):
-    display:grid; grid-auto-flow:column; grid-auto-columns:minmax(280px, 1fr);
-    gap:1.5rem; overflow-x:auto; scroll-snap-type:x mandatory; padding-bottom:1rem;
-    -webkit-overflow-scrolling:touch; scrollbar styles subtle.
-    .plan-card { scroll-snap-align:start; min-width:320px; }
+  .plan-search-input: full width; large padding; thick border (2px); rounded corners (0.75-1rem);
+    IMPORTANT: use dark text on light bg (color:var(--text)) and white/surface background.
+    Set ::placeholder color to var(--muted). Add gentle inner shadow. Height ~56-64px.
+  .plan-dropdown: absolute; left:0; right:0; top:calc(100% + 0.6rem); white bg; shadow;
+    z-index:20; max-height:20rem; overflow-y:auto; rounded corners and soft border.
+  .plan-dropdown__item: must look like the reference cards (clean, aligned, not cramped).
+    Use display:grid; grid-template-columns: 1fr auto; align-items:center; gap:1rem;
+    background:white; border:1px solid hsla(var(--ph),var(--ps),var(--pl),0.12);
+    padding:1rem 1.25rem; margin:0.4rem 0; border-radius:0.6rem;
+    hover: subtle shadow + slightly darker border.
+    Left block (name/plan/location) should be left-aligned; arrow aligned right.
+    .plan-dropdown__name: label font but NOT overly spaced; uppercase ok; color=var(--primary).
+    .plan-dropdown__plan: body font; muted; no heavy letter-spacing.
+    .plan-dropdown__location: muted, small, with location icon and slight spacing.
+  .plan-cards: THIS MUST BE A HORIZONTAL CAROUSEL (no JS) even on desktop:
+    display:flex; gap:1.5rem; overflow-x:auto; scroll-snap-type:x mandatory;
+    padding:0.5rem 0 1rem; -webkit-overflow-scrolling:touch;
+    scroll-padding-left:1rem; scrollbar styles subtle or hidden.
+    .plan-card { flex:0 0 82%; max-width:560px; min-width:320px;
+      scroll-snap-align:start; border-radius:1rem; box-shadow; }
+    Aim to show 1 full card + a peek of the next card (carousel feel).
   .plan-card--strengths: green-tinted bg + border. .plan-card--issues: red-tinted. .plan-card--actions: blue-tinted.
   .plan-card__icon: 3rem square; colored bg; flex center. .plan-loading__ring--spin: animation spin 0.8s linear infinite.
 
