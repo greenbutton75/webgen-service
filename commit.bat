@@ -32,6 +32,11 @@ if "%MSG%"=="" (
     exit /b 1
 )
 
+:: Rename master → main if needed
+git rev-parse --verify master >nul 2>&1 && git rev-parse --verify main >nul 2>&1 || (
+    git branch -m master main >nul 2>&1
+)
+
 :: Stage all changes
 git add -A
 
@@ -44,10 +49,10 @@ echo.
 :: Commit
 git commit -m "%MSG%"
 
-:: Push — try normal push first, force-with-lease on conflict
-git push origin %BRANCH% 2>nul || (
-    echo [WARN] Normal push failed, retrying with --force-with-lease ...
-    git push --force-with-lease origin %BRANCH%
+:: Push with upstream tracking (-u) — handles first push correctly
+git push -u origin %BRANCH% 2>nul || (
+    echo [WARN] Push failed, retrying with --force-with-lease ...
+    git push --force-with-lease -u origin %BRANCH%
 )
 
 echo.
