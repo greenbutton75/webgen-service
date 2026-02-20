@@ -1,55 +1,62 @@
 <!-- ═══════════════════════════════════════════════════════════════
      NEWS & AI BRIEFING SECTION
-     Adapt colors/fonts to match the site design.
      DO NOT modify any JavaScript or fetch() calls.
+     Style the CSS classes below to match the site design.
+     Required classes to style: .news-section, .news-section__header,
+       .news-eyebrow, .news-section__title, .news-section__subtitle,
+       .news-briefing, .news-briefing__inner, .news-briefing__icon-wrap,
+       .news-briefing__title, .news-briefing__date-badge, .news-briefing__subtitle,
+       .news-briefing__grid, .news-briefing__takeaways, .news-briefing__actions,
+       .news-briefing__actions-label, .news-action-item,
+       .news-cards, .news-card, .news-card__tag, .news-card__date,
+       .news-card__title, .news-card__source, .news-card__summary, .news-card__link,
+       .news-loading
      ═══════════════════════════════════════════════════════════════ -->
-<section id="market-intelligence" x-data="newsSection()" x-init="init()" class="py-20 bg-slate-50">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<section id="market-intelligence" x-data="newsSection()" x-init="init()" class="news-section">
+  <div class="news-section__container">
 
-    <!-- Section header -->
-    <div class="mb-12">
-      <h2 class="text-3xl font-bold text-gray-900 mb-3">Market Intelligence</h2>
-      <p class="text-gray-500 text-lg">Stay current with the latest developments in retirement planning and fiduciary compliance.</p>
+    <div class="news-section__header">
+      <div class="news-eyebrow">Market Intelligence</div>
+      <h2 class="news-section__title">Latest Insights</h2>
+      <p class="news-section__subtitle">Stay current with the latest developments in retirement planning and fiduciary compliance.</p>
     </div>
 
-    <!-- Loading state -->
     <template x-if="loading">
-      <div class="flex items-center justify-center py-16 text-gray-400">
-        <i class="fas fa-circle-notch fa-spin text-2xl mr-3"></i>
+      <div class="news-loading">
+        <i class="fas fa-circle-notch fa-spin"></i>
         <span>Loading market intelligence...</span>
       </div>
     </template>
 
-    <!-- AI Executive Briefing -->
     <template x-if="!loading && briefing">
-      <div class="rounded-2xl border border-slate-200 bg-white shadow-sm mb-10 overflow-hidden">
-        <div class="p-8 md:p-10">
-          <div class="flex items-start gap-4 mb-6">
-            <div class="p-3 bg-blue-50 rounded-xl flex-shrink-0">
-              <i class="fas fa-sparkles text-blue-600 text-xl"></i>
+      <div class="news-briefing">
+        <div class="news-briefing__inner">
+          <div class="news-briefing__header">
+            <div class="news-briefing__icon-wrap">
+              <i class="fas fa-sparkles"></i>
             </div>
             <div>
-              <h3 class="text-xl font-bold text-gray-900 flex items-center gap-3">
+              <h3 class="news-briefing__title">
                 AI Executive Briefing
-                <span class="text-xs font-normal text-gray-400 bg-gray-100 px-2.5 py-1 rounded-full border" x-text="'Generated ' + briefing.generatedDate"></span>
+                <span class="news-briefing__date-badge" x-text="'Generated ' + briefing.generatedDate"></span>
               </h3>
-              <p class="text-gray-500 text-sm mt-1">Synthesized analysis for Plan Sponsors</p>
+              <p class="news-briefing__subtitle">Synthesized analysis for Plan Sponsors</p>
             </div>
           </div>
-          <div class="grid md:grid-cols-2 gap-8">
-            <div>
-              <h4 class="font-semibold text-lg mb-3 text-gray-900">Key Takeaways</h4>
-              <p class="text-gray-600 leading-relaxed" x-text="briefing.keyTakeaways"></p>
+          <div class="news-briefing__grid">
+            <div class="news-briefing__takeaways">
+              <h4>Key Takeaways</h4>
+              <p x-text="briefing.keyTakeaways"></p>
             </div>
-            <div class="bg-slate-50 rounded-xl p-6 border border-slate-100">
-              <h4 class="font-bold text-xs uppercase tracking-wider text-gray-500 mb-4 flex items-center gap-2">
-                <i class="fas fa-circle-info text-blue-500"></i>
+            <div class="news-briefing__actions">
+              <h4 class="news-briefing__actions-label">
+                <i class="fas fa-circle-info"></i>
                 Actionable Conclusions
               </h4>
-              <ul class="space-y-3">
+              <ul>
                 <template x-for="item in parsedActionItems" :key="item">
-                  <li class="flex items-start gap-2 text-sm text-gray-700">
-                    <i class="fas fa-circle-check text-green-500 mt-0.5 flex-shrink-0"></i>
+                  <li class="news-action-item">
+                    <i class="fas fa-circle-check"></i>
                     <span x-html="item"></span>
                   </li>
                 </template>
@@ -60,25 +67,21 @@
       </div>
     </template>
 
-    <!-- News cards grid -->
     <template x-if="!loading && articles.length > 0">
-      <div class="grid md:grid-cols-3 gap-6">
+      <div class="news-cards">
         <template x-for="article in articles" :key="article.id">
-          <div class="rounded-xl border bg-white shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col">
-            <div class="p-6 flex flex-col flex-grow">
-              <div class="flex justify-between items-start mb-4">
-                <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-100" x-text="article.tag"></span>
-                <span class="text-xs text-gray-400 ml-2 flex-shrink-0" x-text="article.date"></span>
-              </div>
-              <h4 class="font-bold text-lg leading-snug mb-2 text-gray-900" x-text="article.title"></h4>
-              <p class="text-xs text-gray-400 uppercase tracking-wide font-medium mb-3" x-text="'Source: ' + article.source"></p>
-              <p class="text-gray-600 text-sm leading-relaxed mb-6 flex-grow" x-text="article.summary"></p>
-              <a :href="article.url" target="_blank" rel="noopener noreferrer"
-                 class="inline-flex items-center text-sm font-semibold text-blue-600 hover:text-blue-800 transition-colors mt-auto group">
-                Read Full Article
-                <i class="fas fa-arrow-up-right-from-square ml-2 text-xs group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"></i>
-              </a>
+          <div class="news-card">
+            <div class="news-card__meta">
+              <span class="news-card__tag" x-text="article.tag"></span>
+              <span class="news-card__date" x-text="article.date"></span>
             </div>
+            <h4 class="news-card__title" x-text="article.title"></h4>
+            <p class="news-card__source" x-text="'Source: ' + article.source"></p>
+            <p class="news-card__summary" x-text="article.summary"></p>
+            <a :href="article.url" target="_blank" rel="noopener noreferrer" class="news-card__link">
+              Read Full Article
+              <i class="fas fa-arrow-up-right-from-square"></i>
+            </a>
           </div>
         </template>
       </div>
@@ -106,7 +109,7 @@ function newsSection() {
           try {
             const items = JSON.parse(this.briefing.actionItems);
             this.parsedActionItems = items.map(i =>
-              i.replace(/\*\*(.*?)\*\*/g, '<strong class="text-gray-900">$1</strong>')
+              i.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
             );
           } catch { this.parsedActionItems = []; }
         }

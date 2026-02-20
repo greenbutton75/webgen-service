@@ -20,6 +20,11 @@ TECH STACK — MANDATORY
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 TYPOGRAPHY — CHOOSE FONTS BASED ON STYLE
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+IMPORTANT: Every font family used in CSS MUST be listed in the Google Fonts <link> href.
+If you use "DM Mono" in CSS, it must be in the fonts URL. If you use "Bebas Neue", load it.
+Never reference a font in CSS that isn't loaded. Use the exact Google Fonts URL params
+provided in the design direction. You may extend them with additional weights if needed.
+
 Match the font pair to the visual style directive you receive:
 
 • luxury / premium / editorial / financial advisory premium / warm editorial:
@@ -55,24 +60,39 @@ Match the font pair to the visual style directive you receive:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 CSS ARCHITECTURE
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Always define CSS custom properties in :root derived from the accent hue:
+Always define CSS custom properties in :root derived from the accent hue.
+Also define raw channel variables so you can construct hsla() values:
 
 :root {
-  --primary:       hsl(HUE, 55%, 22%);   /* darkest — nav bg, hero bg, service section */
-  --primary-mid:   hsl(HUE, 45%, 35%);   /* mid shade */
-  --primary-light: hsl(HUE, 40%, 52%);   /* light shade */
-  --gold:          hsl(GOLD_HUE, 55%, 55%);  /* secondary warm accent */
-  --gold-light:    hsl(GOLD_HUE, 60%, 68%);
-  --gold-pale:     hsl(GOLD_HUE, 55%, 90%);
-  --surface:       hsl(HUE, 8%, 97%);    /* page background */
-  --surface-warm:  hsl(GOLD_HUE, 15%, 93%);
-  --charcoal:      #1c1c1c;
-  --text:          hsl(HUE, 10%, 15%);
-  --muted:         hsl(HUE, 5%, 45%);
+  /* Full color values */
+  --primary:         hsl(HUE, 55%, 22%);
+  --primary-mid:     hsl(HUE, 45%, 35%);
+  --primary-light:   hsl(HUE, 40%, 52%);
+  --gold:            hsl(GOLD_HUE, 62%, 52%);
+  --gold-light:      hsl(GOLD_HUE, 60%, 68%);
+  --gold-pale:       hsl(GOLD_HUE, 55%, 90%);
+  --surface:         hsl(HUE, 8%, 97%);
+  --surface-warm:    hsl(GOLD_HUE, 15%, 93%);
+  --charcoal:        #1c1c1c;
+  --text:            hsl(HUE, 10%, 15%);
+  --muted:           hsl(HUE, 5%, 45%);
+
+  /* Raw channels for hsla() construction */
+  --primary-h: HUE; --primary-s: 55%; --primary-l: 22%;
+  --gold-h: GOLD_HUE; --gold-s: 62%; --gold-l: 52%;
 }
 
-For gold accent: if primary hue < 60 or > 300 → use hsl(42, 72%, 52%) as gold.
-Otherwise complement: gold_hue = (accent_hue + 40) % 360.
+For gold accent: if primary hue < 60 or > 300 → use 42 as GOLD_HUE.
+Otherwise: GOLD_HUE = (HUE + 40) % 360.
+
+⚠️ CRITICAL CSS RULE — NEVER DO THIS:
+  rgba(var(--primary), 0.5)    ← BROKEN, CSS vars with hsl() cannot go inside rgba()
+  rgba(var(--gold), 0.2)       ← BROKEN
+
+✅ CORRECT — use hsla() with channel vars OR hardcoded values:
+  hsla(var(--primary-h), var(--primary-s), var(--primary-l), 0.95)   ← correct
+  hsla(42, 62%, 52%, 0.2)                                              ← correct
+  color-mix(in srgb, var(--gold) 20%, transparent)                    ← correct (modern)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 REQUIRED CSS PATTERNS — USE ALL OF THESE
@@ -150,14 +170,49 @@ CONTENT RULES
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 REQUIRED SECTIONS — MANDATORY
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-The user message contains two required section templates. You MUST include both:
+The user message contains two required section templates. You MUST include both EXACTLY as given
+(all Alpine.js x-data, x-for, x-if, fetch() calls unchanged).
 
-1. NEWS & AI BRIEFING SECTION — place after #services.
-   Keep ALL Alpine.js x-data and fetch() calls EXACTLY as written.
-   Restyle: replace any Tailwind classes with your custom CSS classes. Match your palette.
+The templates use semantic BEM-style CSS classes (NO Tailwind). You MUST write CSS for all
+their classes in your <style> block. Key classes to style:
 
-2. RETIREMENT PLAN SEARCH + STRATEGY SECTION — place after news section.
-   Keep ALL Alpine.js x-data, fetch() calls, and loading animation EXACTLY as written.
-   Restyle: replace any Tailwind classes with your custom CSS. Match your palette.
+NEWS SECTION (.news-section, .news-section__container, .news-eyebrow, .news-section__title,
+  .news-section__subtitle, .news-briefing, .news-briefing__inner, .news-briefing__header,
+  .news-briefing__icon-wrap, .news-briefing__title, .news-briefing__date-badge,
+  .news-briefing__grid, .news-briefing__takeaways, .news-briefing__actions,
+  .news-briefing__actions-label, .news-action-item, .news-cards, .news-card,
+  .news-card__meta, .news-card__tag, .news-card__date, .news-card__title,
+  .news-card__source, .news-card__summary, .news-card__link, .news-loading):
+  - Section bg: var(--surface) or light variant
+  - .news-cards: CSS grid, 3 columns, gap 1.5rem
+  - .news-card: white bg, border, padding 1.5rem, flex column, hover shadow
+  - .news-card__tag: small pill, accent color bg, monospace font
+  - .news-card__title: heading font, bold
+  - .news-card__link: accent color, monospace, uppercase
+  - .news-briefing: bordered card, white bg, prominent shadow
+  - .news-briefing__icon-wrap: square, accent bg, icon centered
+  - .news-briefing__grid: 2 columns on desktop
 
-Both use Alpine.js. Ensure Alpine.js CDN is loaded before these sections.
+PLAN SECTION (.plan-section, .plan-section__container, .plan-eyebrow, .plan-section__title,
+  .plan-section__subtitle, .plan-search-wrap, .plan-search-input, .plan-spinner,
+  .plan-dropdown, .plan-dropdown__item, .plan-dropdown__name, .plan-dropdown__plan,
+  .plan-dropdown__location, .plan-selected-title, .plan-selected-subtitle,
+  .plan-loading, .plan-loading__spinner, .plan-loading__ring, .plan-loading__ring--spin,
+  .plan-loading__text, .plan-cards, .plan-card, .plan-card--strengths,
+  .plan-card--issues, .plan-card--actions, .plan-card__icon, .plan-card__label,
+  .plan-card__title, .plan-card__list, .plan-card__list-item, .plan-error):
+  - Section bg: var(--surface-warm) or white
+  - .plan-search-input: full width, large padding, border, heading or body font, no border-radius or subtle
+  - .plan-dropdown: absolute, white bg, shadow, z-index 20, max-height 20rem, overflow-y auto
+  - .plan-cards: CSS grid, 3 columns, gap 1.5rem
+  - .plan-card--strengths: green-tinted border + bg
+  - .plan-card--issues: red-tinted border + bg
+  - .plan-card--actions: blue/primary-tinted border + bg
+  - .plan-card__icon: colored square, icon centered, matches card variant color
+  - .plan-loading__ring--spin: border-top colored, animation spin 0.8s linear infinite
+  - .plan-loading__spinner: position relative, use ::before/::after or nested divs for rings
+
+1. NEWS SECTION — place after #process.
+2. PLAN SECTION — place after news section.
+
+Both sections use Alpine.js. Ensure Alpine.js CDN loads BEFORE these sections (in <head>).
