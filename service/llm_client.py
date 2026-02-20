@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import logging
 import os
 from pathlib import Path
@@ -13,7 +14,10 @@ logger = logging.getLogger(__name__)
 VLLM_URL = os.getenv("WEBGEN_VLLM_URL", "http://localhost:8000")
 MODEL_NAME = os.getenv("WEBGEN_MODEL", "Qwen/Qwen2.5-Coder-32B-Instruct-AWQ")
 MAX_TOKENS = int(os.getenv("WEBGEN_MAX_TOKENS", "10000"))
-TIMEOUT = 600  # 10 min — large sites can take a while
+
+# Streaming: no read timeout (tokens arrive continuously).
+# Connect/write have short timeouts to catch vLLM being down.
+STREAM_TIMEOUT = httpx.Timeout(connect=30.0, read=None, write=30.0, pool=30.0)
 
 PROMPTS_DIR = Path(os.getenv("WEBGEN_PROMPTS_DIR", "prompts"))
 SYSTEM_PROMPT_PATH = PROMPTS_DIR / "system.txt"
@@ -52,20 +56,44 @@ Now generate the complete HTML file."""
 
 
 async def _chat(messages: list[dict], max_tokens: int, temperature: float) -> tuple[str, str]:
-    """Returns (content, finish_reason)."""
-    async with httpx.AsyncClient(timeout=TIMEOUT) as client:
-        resp = await client.post(
+    """Stream response from vLLM, return (full_content, finish_reason).
+    Using streaming avoids ReadTimeout on long generations (10+ min for 32B models).
+    """
+    chunks: list[str] = []
+    finish_reason = "stop"
+
+    async with httpx.AsyncClient(timeout=STREAM_TIMEOUT) as client:
+        async with client.stream(
+            "POST",
             f"{VLLM_URL}/v1/chat/completions",
             json={
                 "model": MODEL_NAME,
                 "messages": messages,
                 "max_tokens": max_tokens,
                 "temperature": temperature,
+                "stream": True,
             },
-        )
-        resp.raise_for_status()
-        choice = resp.json()["choices"][0]
-        return choice["message"]["content"], choice["finish_reason"]
+        ) as resp:
+            resp.raise_for_status()
+            async for line in resp.aiter_lines():
+                if not line.startswith("data: "):
+                    continue
+                payload = line[6:]
+                if payload.strip() == "[DONE]":
+                    break
+                try:
+                    data = json.loads(payload)
+                    choice = data["choices"][0]
+                    delta = choice.get("delta", {})
+                    if "content" in delta and delta["content"]:
+                        chunks.append(delta["content"])
+                    fr = choice.get("finish_reason")
+                    if fr:
+                        finish_reason = fr
+                except (json.JSONDecodeError, KeyError):
+                    continue
+
+    return "".join(chunks), finish_reason
 
 
 async def generate_html(domain: str, content: str) -> str:
